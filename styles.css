@@ -112,10 +112,15 @@ h2 { margin:0 0 14px; font-size:clamp(34px,4.2vw,56px); line-height:1.06; letter
   margin:0; padding:8px; border-radius:18px; overflow:hidden;
   background:linear-gradient(135deg, rgba(230,184,94,.25), rgba(53,168,255,.2));
   box-shadow:var(--shadow);
-  width:min(100%, 560px);
+  width:min(100%, 520px);
   justify-self:center;
 }
-.weather-media img { width:100%; height:auto; border-radius:12px; }
+.weather-media img {
+  width:100%;
+  height:auto;
+  border-radius:12px;
+  filter: contrast(1.08) saturate(1.12) brightness(1.03);
+}
 .overlay-panel {
   grid-column:1 / -1; display:grid; grid-template-columns:.8fr 1.2fr; gap:30px;
   padding:28px; margin-top:8px; border-radius:18px;

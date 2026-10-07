@@ -5,6 +5,22 @@ checkoutButton.addEventListener('click', (event) => {
   if (checkoutButton.getAttribute('aria-disabled') === 'true') event.preventDefault();
 });
 
+const heroImage = document.querySelector('.hero .media-frame img[src="assets/goatpro-hero-live-v3.webp"]');
+if (heroImage) {
+  const heroVideo = document.createElement('video');
+  heroVideo.className = 'hero-presentation-video';
+  heroVideo.controls = true;
+  heroVideo.preload = 'metadata';
+  heroVideo.playsInline = true;
+  heroVideo.setAttribute('aria-label', 'Vídeo de apresentação do GOAT PRO Studio');
+  heroVideo.style.display = 'block';
+  heroVideo.style.width = '100%';
+  heroVideo.style.aspectRatio = '16 / 9';
+  heroVideo.style.borderRadius = '15px';
+  heroVideo.style.background = '#05070b';
+  heroImage.replaceWith(heroVideo);
+}
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {

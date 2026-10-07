@@ -12,7 +12,7 @@ if (heroImage) {
   heroVideo.controls = true;
   heroVideo.preload = 'metadata';
   heroVideo.playsInline = true;
-  heroVideo.src = 'assets/GOAT_PRO_Studio_Apresentacao_FullHD.mp4';
+  heroVideo.src = 'assets/GOAT_PRO_Studio_Apresentacao_FullHD_WEB.mp4';
   heroVideo.setAttribute('aria-label', 'Vídeo de apresentação do GOAT PRO Studio');
   heroVideo.style.display = 'block';
   heroVideo.style.width = '100%';

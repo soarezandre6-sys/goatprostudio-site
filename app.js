@@ -1,9 +1,23 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
 const checkoutButton = document.getElementById('checkoutButton');
-checkoutButton.addEventListener('click', (event) => {
-  if (checkoutButton.getAttribute('aria-disabled') === 'true') event.preventDefault();
-});
+if (checkoutButton) {
+  checkoutButton.addEventListener('click', (event) => {
+    if (checkoutButton.getAttribute('aria-disabled') === 'true') {
+      event.preventDefault();
+      return;
+    }
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'click_comprar', {
+        send_to: 'G-T20WCMY2DG',
+        link_url: checkoutButton.href,
+        link_text: checkoutButton.textContent.trim(),
+        checkout_provider: 'Kiwify'
+      });
+    }
+  });
+}
 
 const heroImage = document.querySelector('.hero .media-frame img[src="assets/goatpro-hero-live-v3.webp"]');
 if (heroImage) {

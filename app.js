@@ -36,13 +36,15 @@ if (checkoutButton) {
 const heroImage = document.querySelector('.hero .media-frame img');
 if (heroImage) {
   const heroParts = [
-    'assets/hero-final-0.part?v=20261010-2',
-    'assets/hero-final-1.part?v=20261010-2',
-    'assets/hero-final-2.part?v=20261010-2',
-    'assets/hero-final-3.part?v=20261010-2',
-    'assets/hero-final-4.part?v=20261010-2'
+    'assets/hero-final-0.part?v=20261010-3',
+    'assets/hero-final-1.part?v=20261010-3',
+    'assets/hero-final-2.part?v=20261010-3',
+    'assets/hero-final-3.part?v=20261010-3',
+    'assets/hero-final-4.part?v=20261010-3'
   ];
 
+  // Evita mostrar ícone de imagem quebrada/alt enquanto os fragmentos são carregados.
+  heroImage.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
   heroImage.alt = 'GOAT PRO Studio com câmeras USB, IP, smartphone e câmera de astronomia';
 
   Promise.all(heroParts.map(async (url) => {

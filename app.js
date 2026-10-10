@@ -31,11 +31,35 @@ if (checkoutButton) {
   });
 }
 
-// Imagem principal aprovada: câmeras USB, IP, smartphone e astronomia.
+// Carrega exatamente a imagem aprovada do GOAT PRO Studio.
+// Ela já está armazenada no repositório em 4 partes base64.
 const heroImage = document.querySelector('.hero .media-frame img');
 if (heroImage) {
-  heroImage.src = 'assets/goatpro-hero-camera-mix-20261009.svg?v=2';
+  const heroParts = [
+    '.hero-upload/part-00.txt?v=20261009-final',
+    '.hero-upload/part-01.txt?v=20261009-final',
+    '.hero-upload/part-02.txt?v=20261009-final',
+    '.hero-upload/part-03.txt?v=20261009-final'
+  ];
+
+  heroImage.removeAttribute('src');
   heroImage.alt = 'GOAT PRO Studio com câmeras USB, IP, smartphone e câmera de astronomia';
+
+  Promise.all(heroParts.map(async (url) => {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Falha ao carregar ${url}: ${response.status}`);
+    }
+    return response.text();
+  }))
+    .then((parts) => {
+      const base64 = parts.join('').replace(/\s+/g, '');
+      heroImage.src = `data:image/webp;base64,${base64}`;
+    })
+    .catch((error) => {
+      console.error('Erro ao carregar a imagem principal aprovada:', error);
+      heroImage.removeAttribute('src');
+    });
 }
 
 const observer = new IntersectionObserver((entries) => {

@@ -31,30 +31,10 @@ if (checkoutButton) {
   });
 }
 
-// Hero do site: imagem atual do GOAT PRO Studio.
-// O vídeo antigo foi removido; a imagem é reconstruída a partir de quatro
-// partes de texto para manter o arquivo binário fora do HTML principal.
+// Imagem principal removida temporariamente até entrar a nova arte aprovada.
 const heroImage = document.querySelector('.hero .media-frame img');
 if (heroImage) {
-  const heroParts = [
-    '.hero-upload/part-00.txt',
-    '.hero-upload/part-01.txt',
-    '.hero-upload/part-02.txt',
-    '.hero-upload/part-03.txt'
-  ];
-
-  Promise.all(heroParts.map(async (path) => {
-    const response = await fetch(path, { cache: 'no-store' });
-    if (!response.ok) throw new Error(`Falha ao carregar ${path}`);
-    return (await response.text()).trim();
-  }))
-    .then((parts) => {
-      heroImage.src = `data:image/webp;base64,${parts.join('')}`;
-      heroImage.alt = 'Interface do GOAT PRO Studio com câmeras USB, IP, smartphone e câmera de astronomia';
-    })
-    .catch((error) => {
-      console.warn('Não foi possível carregar a nova imagem principal do site.', error);
-    });
+  heroImage.remove();
 }
 
 const observer = new IntersectionObserver((entries) => {

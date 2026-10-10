@@ -31,12 +31,6 @@ if (checkoutButton) {
   });
 }
 
-// Imagem principal removida temporariamente até entrar a nova arte aprovada.
-const heroImage = document.querySelector('.hero .media-frame img');
-if (heroImage) {
-  heroImage.remove();
-}
-
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {

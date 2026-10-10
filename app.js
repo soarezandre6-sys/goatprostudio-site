@@ -31,21 +31,30 @@ if (checkoutButton) {
   });
 }
 
-const heroImage = document.querySelector('.hero .media-frame img[src="assets/goatpro-hero-live-v3.webp"]');
+// Hero do site: imagem atual do GOAT PRO Studio.
+// O vídeo antigo foi removido; a imagem é reconstruída a partir de quatro
+// partes de texto para manter o arquivo binário fora do HTML principal.
+const heroImage = document.querySelector('.hero .media-frame img');
 if (heroImage) {
-  const heroVideo = document.createElement('video');
-  heroVideo.className = 'hero-presentation-video';
-  heroVideo.controls = true;
-  heroVideo.preload = 'metadata';
-  heroVideo.playsInline = true;
-  heroVideo.src = 'assets/GOAT_PRO_Studio_Apresentacao_FullHD_WEB.mp4';
-  heroVideo.setAttribute('aria-label', 'Vídeo de apresentação do GOAT PRO Studio');
-  heroVideo.style.display = 'block';
-  heroVideo.style.width = '100%';
-  heroVideo.style.aspectRatio = '16 / 9';
-  heroVideo.style.borderRadius = '15px';
-  heroVideo.style.background = '#05070b';
-  heroImage.replaceWith(heroVideo);
+  const heroParts = [
+    '.hero-upload/part-00.txt',
+    '.hero-upload/part-01.txt',
+    '.hero-upload/part-02.txt',
+    '.hero-upload/part-03.txt'
+  ];
+
+  Promise.all(heroParts.map(async (path) => {
+    const response = await fetch(path, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Falha ao carregar ${path}`);
+    return (await response.text()).trim();
+  }))
+    .then((parts) => {
+      heroImage.src = `data:image/webp;base64,${parts.join('')}`;
+      heroImage.alt = 'Interface do GOAT PRO Studio com câmeras USB, IP, smartphone e câmera de astronomia';
+    })
+    .catch((error) => {
+      console.warn('Não foi possível carregar a nova imagem principal do site.', error);
+    });
 }
 
 const observer = new IntersectionObserver((entries) => {

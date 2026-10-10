@@ -31,18 +31,18 @@ if (checkoutButton) {
   });
 }
 
-// Carrega exatamente a imagem aprovada do GOAT PRO Studio.
-// Ela já está armazenada no repositório em 4 partes base64.
+// Imagem principal aprovada do GOAT PRO Studio.
+// Os fragmentos binários ficam em /assets para o GitHub Pages publicá-los normalmente.
 const heroImage = document.querySelector('.hero .media-frame img');
 if (heroImage) {
   const heroParts = [
-    '.hero-upload/part-00.txt?v=20261009-final',
-    '.hero-upload/part-01.txt?v=20261009-final',
-    '.hero-upload/part-02.txt?v=20261009-final',
-    '.hero-upload/part-03.txt?v=20261009-final'
+    'assets/hero-final-0.part?v=20261010-2',
+    'assets/hero-final-1.part?v=20261010-2',
+    'assets/hero-final-2.part?v=20261010-2',
+    'assets/hero-final-3.part?v=20261010-2',
+    'assets/hero-final-4.part?v=20261010-2'
   ];
 
-  heroImage.removeAttribute('src');
   heroImage.alt = 'GOAT PRO Studio com câmeras USB, IP, smartphone e câmera de astronomia';
 
   Promise.all(heroParts.map(async (url) => {
@@ -50,15 +50,23 @@ if (heroImage) {
     if (!response.ok) {
       throw new Error(`Falha ao carregar ${url}: ${response.status}`);
     }
-    return response.text();
+    return new Uint8Array(await response.arrayBuffer());
   }))
     .then((parts) => {
-      const base64 = parts.join('').replace(/\s+/g, '');
-      heroImage.src = `data:image/webp;base64,${base64}`;
+      const totalLength = parts.reduce((total, part) => total + part.length, 0);
+      const bytes = new Uint8Array(totalLength);
+      let offset = 0;
+      for (const part of parts) {
+        bytes.set(part, offset);
+        offset += part.length;
+      }
+
+      const objectUrl = URL.createObjectURL(new Blob([bytes], { type: 'image/webp' }));
+      heroImage.onload = () => URL.revokeObjectURL(objectUrl);
+      heroImage.src = objectUrl;
     })
     .catch((error) => {
       console.error('Erro ao carregar a imagem principal aprovada:', error);
-      heroImage.removeAttribute('src');
     });
 }
 

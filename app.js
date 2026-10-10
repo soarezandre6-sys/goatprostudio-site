@@ -31,6 +31,13 @@ if (checkoutButton) {
   });
 }
 
+// Imagem principal aprovada: câmeras USB, IP, smartphone e astronomia.
+const heroImage = document.querySelector('.hero .media-frame img');
+if (heroImage) {
+  heroImage.src = 'assets/goatpro-hero-camera-mix-20261009.svg?v=2';
+  heroImage.alt = 'GOAT PRO Studio com câmeras USB, IP, smartphone e câmera de astronomia';
+}
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {

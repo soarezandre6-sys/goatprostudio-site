@@ -14,7 +14,25 @@ gaScript.async = true;
 gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
 document.head.appendChild(gaScript);
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const mainNav = document.querySelector('.topbar nav');
+if (mainNav && !mainNav.querySelector('[data-support-link]')) {
+  const supportLink = document.createElement('a');
+  supportLink.href = '/suporte/';
+  supportLink.textContent = 'Suporte';
+  supportLink.dataset.supportLink = 'true';
+
+  const buyLink = mainNav.querySelector('.nav-cta');
+  if (buyLink) {
+    mainNav.insertBefore(supportLink, buyLink);
+  } else {
+    mainNav.appendChild(supportLink);
+  }
+}
+
+const yearElement = document.getElementById('year');
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
 
 const checkoutButton = document.getElementById('checkoutButton');
 if (checkoutButton) {

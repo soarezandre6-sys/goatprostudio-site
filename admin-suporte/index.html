@@ -10,10 +10,11 @@
   <link rel="stylesheet" href="/styles.css" />
   <style>
     body{min-height:100vh;background:#070a10;color:#f5f8ff}
-    .admin-wrap{max-width:980px;margin:0 auto;padding:72px 24px 96px}
-    .admin-card{max-width:560px;margin:0 auto;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,23,37,.97),rgba(8,12,20,.99));border-radius:20px;padding:32px;box-shadow:var(--shadow)}
-    .admin-card h1{margin:0 0 10px;font-size:32px}
-    .admin-card p{color:#9fb0c5;line-height:1.6}
+    .admin-wrap{max-width:1180px;margin:0 auto;padding:54px 24px 96px}
+    .admin-card,.dashboard-card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,23,37,.97),rgba(8,12,20,.99));border-radius:20px;box-shadow:var(--shadow)}
+    .admin-card{max-width:560px;margin:18px auto 0;padding:32px}
+    .admin-card h1,.dashboard-card h1{margin:0 0 10px}
+    .admin-card p,.muted{color:#9fb0c5;line-height:1.6}
     .admin-email{margin:20px 0;padding:14px 16px;border-radius:12px;background:#0a1019;border:1px solid rgba(255,255,255,.10);color:#dce7f6;font-weight:700;word-break:break-word}
     .admin-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
     .admin-btn{border:0;cursor:pointer}
@@ -21,10 +22,23 @@
     .status{margin-top:18px;min-height:24px;font-size:14px;color:#a7b7ca}
     .status.ok{padding:14px;border-radius:12px;background:rgba(98,220,164,.08);border:1px solid rgba(98,220,164,.25);color:#baf0d5}
     .status.err{padding:14px;border-radius:12px;background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.25);color:#ffc3c3}
-    .panel{display:none;margin-top:24px}
-    .panel.visible{display:block}
-    .panel-box{border:1px solid rgba(255,255,255,.08);background:#0b111b;border-radius:14px;padding:18px}
-    .panel-box strong{color:#e6b85e}
+    #dashboard{display:none}.dashboard-visible{display:block!important}
+    .dashboard-card{padding:28px}
+    .dash-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:24px 0}
+    .summary-box{padding:18px;border-radius:14px;background:#0a1019;border:1px solid rgba(255,255,255,.08)}
+    .summary-box span{display:block;color:#8fa2ba;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+    .summary-box strong{display:block;margin-top:6px;font-size:28px;color:#f5f8ff}
+    .ticket-list{display:grid;gap:12px;margin-top:18px}
+    .ticket{padding:18px;border-radius:14px;background:#0b111b;border:1px solid rgba(255,255,255,.08)}
+    .ticket-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .ticket-code{font-weight:900;color:#e6b85e}
+    .ticket-status{font-size:12px;font-weight:900;padding:6px 9px;border-radius:999px;background:rgba(98,220,164,.09);border:1px solid rgba(98,220,164,.2);color:#baf0d5}
+    .ticket h3{margin:10px 0 6px;font-size:18px}
+    .ticket-meta{color:#8fa2ba;font-size:13px;line-height:1.55}
+    .ticket-message{margin:12px 0 0;color:#cbd8e8;font-size:14px;line-height:1.55;white-space:pre-wrap}
+    .empty{padding:28px;text-align:center;color:#8fa2ba;border:1px dashed rgba(255,255,255,.12);border-radius:14px}
+    @media(max-width:760px){.summary{grid-template-columns:1fr}.admin-wrap{padding:34px 16px 70px}.dashboard-card{padding:20px}}
   </style>
 </head>
 <body>
@@ -34,27 +48,39 @@
   </header>
 
   <main class="admin-wrap">
-    <section class="admin-card">
+    <section id="loginCard" class="admin-card">
       <span class="eyebrow">ÁREA RESTRITA</span>
       <h1>Painel de Suporte</h1>
       <p>Este painel é reservado à administração do GOAT PRO Studio. O acesso é feito por link seguro enviado por e-mail.</p>
-
-      <div id="loginBox">
-        <div class="admin-email">soarezandre6@gmail.com</div>
-        <div class="admin-actions">
-          <button id="loginBtn" class="btn btn-primary admin-btn" type="button">Enviar link de acesso</button>
-        </div>
-        <div id="loginStatus" class="status" role="status" aria-live="polite"></div>
+      <div class="admin-email">soarezandre6@gmail.com</div>
+      <div class="admin-actions">
+        <button id="loginBtn" class="btn btn-primary admin-btn" type="button">Enviar link de acesso</button>
       </div>
+      <div id="loginStatus" class="status" role="status" aria-live="polite"></div>
+    </section>
 
-      <div id="panel" class="panel">
-        <div class="panel-box">
-          <strong>Acesso administrativo confirmado.</strong>
-          <p style="margin:8px 0 0">O login está funcionando. Na próxima etapa vamos carregar a lista de chamados aqui.</p>
+    <section id="dashboard">
+      <div class="dashboard-card">
+        <div class="dash-head">
+          <div>
+            <span class="eyebrow">ADMINISTRAÇÃO</span>
+            <h1>Chamados de suporte</h1>
+            <div class="muted">Acesso administrativo confirmado.</div>
+          </div>
+          <div class="admin-actions" style="margin-top:0">
+            <button id="refreshBtn" class="btn admin-btn" type="button">Atualizar</button>
+            <button id="logoutBtn" class="btn admin-btn" type="button">Sair</button>
+          </div>
         </div>
-        <div class="admin-actions">
-          <button id="logoutBtn" class="btn admin-btn" type="button">Sair</button>
+
+        <div class="summary">
+          <div class="summary-box"><span>Total</span><strong id="countTotal">0</strong></div>
+          <div class="summary-box"><span>Abertos</span><strong id="countOpen">0</strong></div>
+          <div class="summary-box"><span>Resolvidos</span><strong id="countResolved">0</strong></div>
         </div>
+
+        <div id="panelStatus" class="status" role="status" aria-live="polite"></div>
+        <div id="ticketList" class="ticket-list"></div>
       </div>
     </section>
   </main>
@@ -66,36 +92,90 @@
     const SUPABASE_KEY = 'sb_publishable_vr2UW8sIcLQoPaKIm0dy7w_clbZ2i0v';
     const ADMIN_EMAIL = 'soarezandre6@gmail.com';
     const REDIRECT_TO = 'https://goatprostudio.com.br/admin-suporte/';
+    const ADMIN_API = `${SUPABASE_URL}/functions/v1/support-admin`;
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
     });
 
-    const loginBox = document.getElementById('loginBox');
+    const loginCard = document.getElementById('loginCard');
     const loginBtn = document.getElementById('loginBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
     const loginStatus = document.getElementById('loginStatus');
-    const panel = document.getElementById('panel');
+    const dashboard = document.getElementById('dashboard');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const panelStatus = document.getElementById('panelStatus');
+    const ticketList = document.getElementById('ticketList');
+    const countTotal = document.getElementById('countTotal');
+    const countOpen = document.getElementById('countOpen');
+    const countResolved = document.getElementById('countResolved');
 
-    function showLoggedOut(message = '') {
-      loginBox.style.display = 'block';
-      panel.classList.remove('visible');
+    const esc = (value) => String(value ?? '').replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
+    const categoryLabel = (value) => ({instalacao:'Instalação',licenca:'Licença / serial',camera:'Câmera',audio_video:'Áudio / vídeo',live_stack:'Live Stack',outro:'Outro'}[value] || value || 'Outro');
+    const statusLabel = (value) => ({open:'Aberto',waiting:'Aguardando cliente',resolved:'Resolvido',closed:'Encerrado'}[value] || value || 'Aberto');
+
+    function loggedOut(message='') {
+      loginCard.style.display = 'block';
+      dashboard.classList.remove('dashboard-visible');
       loginStatus.className = 'status';
       loginStatus.textContent = message;
     }
 
-    async function showLoggedIn(session) {
+    async function loadTickets(session) {
+      panelStatus.className = 'status';
+      panelStatus.textContent = 'Carregando chamados...';
+      refreshBtn.disabled = true;
+      try {
+        const response = await fetch(ADMIN_API, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`,
+            'apikey': SUPABASE_KEY
+          }
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Não foi possível carregar os chamados.');
+        const tickets = Array.isArray(result.tickets) ? result.tickets : [];
+        countTotal.textContent = tickets.length;
+        countOpen.textContent = tickets.filter(t => t.status === 'open').length;
+        countResolved.textContent = tickets.filter(t => t.status === 'resolved' || t.status === 'closed').length;
+        panelStatus.textContent = '';
+        if (!tickets.length) {
+          ticketList.innerHTML = '<div class="empty">Nenhum chamado encontrado.</div>';
+          return;
+        }
+        ticketList.innerHTML = tickets.map((t) => {
+          const when = t.created_at ? new Date(t.created_at).toLocaleString('pt-BR') : '';
+          return `<article class="ticket">
+            <div class="ticket-top">
+              <div class="ticket-code">${esc(t.ticket_code)}</div>
+              <div class="ticket-status">${esc(statusLabel(t.status))}</div>
+            </div>
+            <h3>${esc(t.subject)}</h3>
+            <div class="ticket-meta"><strong>${esc(t.name)}</strong> · ${esc(t.email)}<br>${esc(categoryLabel(t.category))} · ${esc(when)}</div>
+            <div class="ticket-message">${esc(t.message)}</div>
+          </article>`;
+        }).join('');
+      } catch (err) {
+        panelStatus.className = 'status err';
+        panelStatus.textContent = err?.message || 'Erro ao carregar os chamados.';
+        ticketList.innerHTML = '';
+      } finally {
+        refreshBtn.disabled = false;
+      }
+    }
+
+    async function loggedIn(session) {
       const email = String(session?.user?.email || '').toLowerCase();
       if (email !== ADMIN_EMAIL) {
         await supabase.auth.signOut();
+        loggedOut('Acesso não autorizado.');
         loginStatus.className = 'status err';
-        loginStatus.textContent = 'Acesso não autorizado.';
-        loginBox.style.display = 'block';
-        panel.classList.remove('visible');
         return;
       }
-      loginBox.style.display = 'none';
-      panel.classList.add('visible');
+      loginCard.style.display = 'none';
+      dashboard.classList.add('dashboard-visible');
+      await loadTickets(session);
     }
 
     loginBtn.addEventListener('click', async () => {
@@ -120,17 +200,22 @@
       }
     });
 
+    refreshBtn.addEventListener('click', async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) await loadTickets(session);
+    });
+
     logoutBtn.addEventListener('click', async () => {
       await supabase.auth.signOut();
-      showLoggedOut('Sessão encerrada.');
+      loggedOut('Sessão encerrada.');
     });
 
     const { data: { session } } = await supabase.auth.getSession();
-    if (session) await showLoggedIn(session); else showLoggedOut();
+    if (session) await loggedIn(session); else loggedOut();
 
-    supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session) await showLoggedIn(session);
-      else showLoggedOut();
+    supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+      if (nextSession) await loggedIn(nextSession);
+      else loggedOut();
     });
   </script>
 </body>

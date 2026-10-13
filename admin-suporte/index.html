@@ -11,7 +11,7 @@
   <style>
     body{min-height:100vh;background:#070a10;color:#f5f8ff}
     .admin-wrap{max-width:1180px;margin:0 auto;padding:54px 24px 96px}
-    .admin-card,.dashboard-card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,23,37,.97),rgba(8,12,20,.99));border-radius:20px;box-shadow:var(--shadow)}
+    .admin-card,.dashboard-card,.detail-card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,23,37,.97),rgba(8,12,20,.99));border-radius:20px;box-shadow:var(--shadow)}
     .admin-card{max-width:560px;margin:18px auto 0;padding:32px}
     .admin-card h1,.dashboard-card h1{margin:0 0 10px}
     .admin-card p,.muted{color:#9fb0c5;line-height:1.6}
@@ -30,15 +30,29 @@
     .summary-box span{display:block;color:#8fa2ba;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
     .summary-box strong{display:block;margin-top:6px;font-size:28px;color:#f5f8ff}
     .ticket-list{display:grid;gap:12px;margin-top:18px}
-    .ticket{padding:18px;border-radius:14px;background:#0b111b;border:1px solid rgba(255,255,255,.08)}
+    .ticket{padding:18px;border-radius:14px;background:#0b111b;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:.16s ease}
+    .ticket:hover{border-color:rgba(53,168,255,.38);transform:translateY(-1px)}
+    .ticket:focus{outline:2px solid rgba(53,168,255,.55);outline-offset:2px}
     .ticket-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .ticket-code{font-weight:900;color:#e6b85e}
     .ticket-status{font-size:12px;font-weight:900;padding:6px 9px;border-radius:999px;background:rgba(98,220,164,.09);border:1px solid rgba(98,220,164,.2);color:#baf0d5}
     .ticket h3{margin:10px 0 6px;font-size:18px}
     .ticket-meta{color:#8fa2ba;font-size:13px;line-height:1.55}
     .ticket-message{margin:12px 0 0;color:#cbd8e8;font-size:14px;line-height:1.55;white-space:pre-wrap}
+    .ticket-open-hint{margin-top:12px;color:#69bfff;font-size:12px;font-weight:800}
     .empty{padding:28px;text-align:center;color:#8fa2ba;border:1px dashed rgba(255,255,255,.12);border-radius:14px}
-    @media(max-width:760px){.summary{grid-template-columns:1fr}.admin-wrap{padding:34px 16px 70px}.dashboard-card{padding:20px}}
+    .detail-card{display:none;margin-top:18px;padding:24px}
+    .detail-card.visible{display:block}
+    .detail-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    .detail-title{margin:6px 0 0;font-size:24px}
+    .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+    .detail-field{padding:14px;border-radius:12px;background:#0a1019;border:1px solid rgba(255,255,255,.08)}
+    .detail-field span{display:block;color:#7f91aa;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .detail-field strong,.detail-field div{color:#e7eef8;word-break:break-word}
+    .detail-message{margin-top:14px;padding:18px;border-radius:12px;background:#0a1019;border:1px solid rgba(255,255,255,.08)}
+    .detail-message span{display:block;color:#7f91aa;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .detail-message div{color:#d5dfed;line-height:1.65;white-space:pre-wrap}
+    @media(max-width:760px){.summary,.detail-grid{grid-template-columns:1fr}.admin-wrap{padding:34px 16px 70px}.dashboard-card,.detail-card{padding:20px}}
   </style>
 </head>
 <body>
@@ -82,6 +96,8 @@
         <div id="panelStatus" class="status" role="status" aria-live="polite"></div>
         <div id="ticketList" class="ticket-list"></div>
       </div>
+
+      <div id="ticketDetail" class="detail-card" aria-live="polite"></div>
     </section>
   </main>
 
@@ -106,19 +122,48 @@
     const refreshBtn = document.getElementById('refreshBtn');
     const panelStatus = document.getElementById('panelStatus');
     const ticketList = document.getElementById('ticketList');
+    const ticketDetail = document.getElementById('ticketDetail');
     const countTotal = document.getElementById('countTotal');
     const countOpen = document.getElementById('countOpen');
     const countResolved = document.getElementById('countResolved');
+    let currentTickets = [];
 
     const esc = (value) => String(value ?? '').replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
     const categoryLabel = (value) => ({instalacao:'Instalação',licenca:'Licença / serial',camera:'Câmera',audio_video:'Áudio / vídeo',live_stack:'Live Stack',outro:'Outro'}[value] || value || 'Outro');
     const statusLabel = (value) => ({open:'Aberto',waiting:'Aguardando cliente',resolved:'Resolvido',closed:'Encerrado'}[value] || value || 'Aberto');
+    const dateLabel = (value) => value ? new Date(value).toLocaleString('pt-BR') : '';
 
     function loggedOut(message='') {
       loginCard.style.display = 'block';
       dashboard.classList.remove('dashboard-visible');
       loginStatus.className = 'status';
       loginStatus.textContent = message;
+    }
+
+    function openTicket(index) {
+      const t = currentTickets[index];
+      if (!t) return;
+      ticketDetail.innerHTML = `
+        <div class="detail-head">
+          <div>
+            <span class="eyebrow">CHAMADO ${esc(t.ticket_code)}</span>
+            <h2 class="detail-title">${esc(t.subject)}</h2>
+          </div>
+          <button id="closeDetailBtn" class="btn admin-btn" type="button">Fechar</button>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-field"><span>Status</span><strong>${esc(statusLabel(t.status))}</strong></div>
+          <div class="detail-field"><span>Categoria</span><strong>${esc(categoryLabel(t.category))}</strong></div>
+          <div class="detail-field"><span>Cliente</span><div>${esc(t.name)}</div></div>
+          <div class="detail-field"><span>E-mail</span><div>${esc(t.email)}</div></div>
+          <div class="detail-field"><span>E-mail da compra</span><div>${esc(t.purchase_email || 'Não informado')}</div></div>
+          <div class="detail-field"><span>Aberto em</span><div>${esc(dateLabel(t.created_at))}</div></div>
+        </div>
+        <div class="detail-message"><span>Mensagem inicial</span><div>${esc(t.message)}</div></div>
+      `;
+      ticketDetail.classList.add('visible');
+      document.getElementById('closeDetailBtn')?.addEventListener('click', () => ticketDetail.classList.remove('visible'));
+      ticketDetail.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     async function loadTickets(session) {
@@ -136,17 +181,19 @@
         const result = await response.json().catch(() => ({}));
         if (!response.ok || !result.ok) throw new Error(result.message || 'Não foi possível carregar os chamados.');
         const tickets = Array.isArray(result.tickets) ? result.tickets : [];
+        currentTickets = tickets;
         countTotal.textContent = tickets.length;
         countOpen.textContent = tickets.filter(t => t.status === 'open').length;
         countResolved.textContent = tickets.filter(t => t.status === 'resolved' || t.status === 'closed').length;
         panelStatus.textContent = '';
+        ticketDetail.classList.remove('visible');
         if (!tickets.length) {
           ticketList.innerHTML = '<div class="empty">Nenhum chamado encontrado.</div>';
           return;
         }
-        ticketList.innerHTML = tickets.map((t) => {
-          const when = t.created_at ? new Date(t.created_at).toLocaleString('pt-BR') : '';
-          return `<article class="ticket">
+        ticketList.innerHTML = tickets.map((t, index) => {
+          const when = dateLabel(t.created_at);
+          return `<article class="ticket" role="button" tabindex="0" data-ticket-index="${index}" aria-label="Abrir chamado ${esc(t.ticket_code)}">
             <div class="ticket-top">
               <div class="ticket-code">${esc(t.ticket_code)}</div>
               <div class="ticket-status">${esc(statusLabel(t.status))}</div>
@@ -154,8 +201,17 @@
             <h3>${esc(t.subject)}</h3>
             <div class="ticket-meta"><strong>${esc(t.name)}</strong> · ${esc(t.email)}<br>${esc(categoryLabel(t.category))} · ${esc(when)}</div>
             <div class="ticket-message">${esc(t.message)}</div>
+            <div class="ticket-open-hint">Clique para abrir o chamado</div>
           </article>`;
         }).join('');
+
+        ticketList.querySelectorAll('.ticket').forEach((el) => {
+          const activate = () => openTicket(Number(el.dataset.ticketIndex));
+          el.addEventListener('click', activate);
+          el.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(); }
+          });
+        });
       } catch (err) {
         panelStatus.className = 'status err';
         panelStatus.textContent = err?.message || 'Erro ao carregar os chamados.';

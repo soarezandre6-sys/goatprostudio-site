@@ -111,6 +111,7 @@
     let currentTickets=[],selectedTicketId=null;
 
     const esc=(v)=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
+    const cleanText=(v)=>String(v??'').replace(/\\r\\n/g,'\n').replace(/\\n/g,'\n');
     const categoryLabel=(v)=>({instalacao:'Instalação',licenca:'Licença / serial',camera:'Câmera',audio_video:'Áudio / vídeo',live_stack:'Live Stack',outro:'Outro'}[v]||v||'Outro');
     const statusLabel=(v)=>({open:'Aberto',in_progress:'Em atendimento',waiting_customer:'Aguardando cliente',resolved:'Resolvido',closed:'Encerrado'}[v]||v||'Aberto');
     const dateLabel=(v)=>v?new Date(v).toLocaleString('pt-BR'):'';
@@ -118,45 +119,49 @@
     function loggedOut(message=''){loginCard.style.display='block';dashboard.classList.remove('dashboard-visible');loginStatus.className='status';loginStatus.textContent=message;}
     function conversationHtml(messages=[]){
       if(!messages.length)return '<div class="empty">Ainda não há mensagens registradas nesta conversa.</div>';
-      return messages.map(m=>{const who=m.direction==='support'?'Suporte GOAT PRO Studio':'Cliente';const cls=m.direction==='support'?'support':'customer';return `<div class="bubble ${cls}"><div class="bubble-head"><span class="bubble-name">${esc(who)}</span><span class="bubble-date">${esc(dateLabel(m.created_at))}</span></div><div class="bubble-body">${esc(m.body)}</div></div>`}).join('');
+      return messages.map(m=>{const who=m.direction==='support'?'Suporte GOAT PRO Studio':'Cliente';const cls=m.direction==='support'?'support':'customer';return `<div class="bubble ${cls}"><div class="bubble-head"><span class="bubble-name">${esc(who)}</span><span class="bubble-date">${esc(dateLabel(m.created_at))}</span></div><div class="bubble-body">${esc(cleanText(m.body))}</div></div>`}).join('');
     }
 
     async function sendReply(ticket){
-      const textarea=document.getElementById('replyText'),button=document.getElementById('sendReplyBtn'),status=document.getElementById('replyStatus');
+      const textarea=document.getElementById('replyText'),button=document.getElementById('sendReplyBtn'),status=document.getElementById('replyStatus'),replyBox=document.querySelector('.reply-box');
       const message=String(textarea?.value||'').trim();
       if(message.length<2){status.className='status err';status.textContent='Digite uma resposta antes de enviar.';return;}
       if(!window.confirm('Enviar esta resposta ao cliente agora?'))return;
+      const replyBoxTop=replyBox?.getBoundingClientRect().top??null;
       button.disabled=true;button.textContent='Enviando...';status.className='status';status.textContent='';
       try{
         const {data:{session}}=await supabase.auth.getSession();if(!session)throw new Error('Sua sessão expirou.');
         const response=await fetch(ADMIN_API,{method:'POST',headers:{'Authorization':`Bearer ${session.access_token}`,'apikey':SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({action:'reply',ticket_id:ticket.id,message})});
         const result=await response.json().catch(()=>({}));if(!response.ok||!result.ok)throw new Error(result.message||'Não foi possível enviar a resposta.');
-        status.className='status ok';status.textContent='Resposta enviada com sucesso.';textarea.value='';selectedTicketId=ticket.id;await loadTickets(session,true);
+        textarea.value='';selectedTicketId=ticket.id;await loadTickets(session,true,false);
+        const freshStatus=document.getElementById('replyStatus'),freshReplyBox=document.querySelector('.reply-box');
+        if(freshStatus){freshStatus.className='status ok';freshStatus.textContent='Resposta enviada com sucesso.';}
+        if(replyBoxTop!==null&&freshReplyBox){requestAnimationFrame(()=>{const delta=freshReplyBox.getBoundingClientRect().top-replyBoxTop;if(Math.abs(delta)>1)window.scrollBy({top:delta,left:0,behavior:'auto'});});}
       }catch(err){status.className='status err';status.textContent=err?.message||'Erro ao enviar a resposta.';}finally{button.disabled=false;button.textContent='Enviar resposta';}
     }
 
-    function openTicketById(id){const index=currentTickets.findIndex(t=>t.id===id);if(index>=0)openTicket(index);}
-    function openTicket(index){
+    function openTicketById(id,shouldScroll=true){const index=currentTickets.findIndex(t=>t.id===id);if(index>=0)openTicket(index,shouldScroll);}
+    function openTicket(index,shouldScroll=true){
       const t=currentTickets[index];if(!t)return;selectedTicketId=t.id;const messages=Array.isArray(t.goat_support_messages)?t.goat_support_messages:[];
       ticketDetail.innerHTML=`<div class="detail-head"><div><span class="eyebrow">CHAMADO ${esc(t.ticket_code)}</span><h2 class="detail-title">${esc(t.subject)}</h2></div><button id="closeDetailBtn" class="btn admin-btn" type="button">Fechar</button></div>
         <div class="detail-grid"><div class="detail-field"><span>Status</span><strong>${esc(statusLabel(t.status))}</strong></div><div class="detail-field"><span>Categoria</span><strong>${esc(categoryLabel(t.category))}</strong></div><div class="detail-field"><span>Cliente</span><div>${esc(t.name)}</div></div><div class="detail-field"><span>E-mail</span><div>${esc(t.email)}</div></div><div class="detail-field"><span>E-mail da compra</span><div>${esc(t.purchase_email||'Não informado')}</div></div><div class="detail-field"><span>Aberto em</span><div>${esc(dateLabel(t.created_at))}</div></div></div>
-        <div class="detail-message"><span class="section-label">Mensagem inicial</span><div>${esc(t.message)}</div></div>
+        <div class="detail-message"><span class="section-label">Mensagem inicial</span><div>${esc(cleanText(t.message))}</div></div>
         <div class="conversation"><span class="section-label">Conversa</span>${conversationHtml(messages)}</div>
         <div class="reply-box"><span class="section-label">Responder ao cliente</span><textarea id="replyText" maxlength="5000" placeholder="Digite sua resposta aqui..."></textarea><div class="reply-note">A mensagem será enviada por suporte@goatprostudio.com.br e ficará registrada neste chamado.</div><div class="admin-actions"><button id="sendReplyBtn" class="btn btn-primary admin-btn" type="button">Enviar resposta</button></div><div id="replyStatus" class="status" role="status" aria-live="polite"></div></div>`;
       ticketDetail.classList.add('visible');
       document.getElementById('closeDetailBtn')?.addEventListener('click',()=>{ticketDetail.classList.remove('visible');selectedTicketId=null;});
       document.getElementById('sendReplyBtn')?.addEventListener('click',()=>sendReply(t));
-      ticketDetail.scrollIntoView({behavior:'smooth',block:'start'});
+      if(shouldScroll)ticketDetail.scrollIntoView({behavior:'smooth',block:'start'});
     }
 
-    async function loadTickets(session,reopen=false){
+    async function loadTickets(session,reopen=false,shouldScroll=true){
       panelStatus.className='status';panelStatus.textContent='Carregando chamados...';refreshBtn.disabled=true;
       try{const response=await fetch(ADMIN_API,{method:'GET',headers:{'Authorization':`Bearer ${session.access_token}`,'apikey':SUPABASE_KEY}});const result=await response.json().catch(()=>({}));if(!response.ok||!result.ok)throw new Error(result.message||'Não foi possível carregar os chamados.');
         const tickets=Array.isArray(result.tickets)?result.tickets:[];currentTickets=tickets;countTotal.textContent=tickets.length;countOpen.textContent=tickets.filter(t=>['open','in_progress','waiting_customer'].includes(t.status)).length;countResolved.textContent=tickets.filter(t=>['resolved','closed'].includes(t.status)).length;panelStatus.textContent='';if(!reopen)ticketDetail.classList.remove('visible');
         if(!tickets.length){ticketList.innerHTML='<div class="empty">Nenhum chamado encontrado.</div>';return;}
-        ticketList.innerHTML=tickets.map((t,index)=>`<article class="ticket" role="button" tabindex="0" data-ticket-index="${index}" aria-label="Abrir chamado ${esc(t.ticket_code)}"><div class="ticket-top"><div class="ticket-code">${esc(t.ticket_code)}</div><div class="ticket-status">${esc(statusLabel(t.status))}</div></div><h3>${esc(t.subject)}</h3><div class="ticket-meta"><strong>${esc(t.name)}</strong> · ${esc(t.email)}<br>${esc(categoryLabel(t.category))} · ${esc(dateLabel(t.created_at))}</div><div class="ticket-message">${esc(t.message)}</div><div class="ticket-open-hint">Clique para abrir o chamado</div></article>`).join('');
+        ticketList.innerHTML=tickets.map((t,index)=>`<article class="ticket" role="button" tabindex="0" data-ticket-index="${index}" aria-label="Abrir chamado ${esc(t.ticket_code)}"><div class="ticket-top"><div class="ticket-code">${esc(t.ticket_code)}</div><div class="ticket-status">${esc(statusLabel(t.status))}</div></div><h3>${esc(t.subject)}</h3><div class="ticket-meta"><strong>${esc(t.name)}</strong> · ${esc(t.email)}<br>${esc(categoryLabel(t.category))} · ${esc(dateLabel(t.created_at))}</div><div class="ticket-message">${esc(cleanText(t.message))}</div><div class="ticket-open-hint">Clique para abrir o chamado</div></article>`).join('');
         ticketList.querySelectorAll('.ticket').forEach(el=>{const activate=()=>openTicket(Number(el.dataset.ticketIndex));el.addEventListener('click',activate);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}});});
-        if(reopen&&selectedTicketId)openTicketById(selectedTicketId);
+        if(reopen&&selectedTicketId)openTicketById(selectedTicketId,shouldScroll);
       }catch(err){panelStatus.className='status err';panelStatus.textContent=err?.message||'Erro ao carregar os chamados.';ticketList.innerHTML='';}finally{refreshBtn.disabled=false;}
     }
 

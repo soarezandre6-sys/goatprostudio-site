@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#070a10" />
+  <title>Suporte — GOAT PRO Studio</title>
+  <meta name="description" content="Abra um chamado de suporte do GOAT PRO Studio para instalação, licença, câmeras, áudio, vídeo, Live Stack e outras dúvidas." />
+  <link rel="icon" href="/assets/goatpro-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .support-hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 76px 36px 34px;
+      text-align: center;
+    }
+    .support-hero p {
+      max-width: 760px;
+      margin: 14px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .support-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 36px 96px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      align-items: start;
+    }
+    .support-card, .support-aside {
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(15,23,37,.96), rgba(8,12,20,.98));
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .support-card { padding: 30px; }
+    .support-aside { padding: 26px; }
+    .support-aside h3 { margin: 0 0 10px; font-size: 20px; }
+    .support-aside p { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+    .support-email {
+      display: block;
+      padding: 13px 14px;
+      border-radius: 12px;
+      color: #dcecff;
+      border: 1px solid rgba(53,168,255,.22);
+      background: rgba(53,168,255,.07);
+      word-break: break-word;
+    }
+    .support-note {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #91a2b9;
+      font-size: 13px;
+    }
+    .support-form { display: grid; gap: 18px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: grid; gap: 8px; }
+    .field label { color: #dce7f6; font-size: 13px; font-weight: 800; }
+    .field small { color: #7f91aa; font-size: 12px; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      color: #f5f8ff;
+      background: #0a1019;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 11px;
+      padding: 13px 14px;
+      font: inherit;
+      outline: none;
+      transition: .18s ease;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: rgba(53,168,255,.55);
+      box-shadow: 0 0 0 3px rgba(53,168,255,.08);
+    }
+    .field textarea { min-height: 180px; resize: vertical; }
+    .field select option { color: #111; }
+    .form-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .support-submit { border: 0; cursor: pointer; color: #fff; }
+    .support-submit:disabled { opacity: .65; cursor: wait; transform: none; }
+    .form-status {
+      min-height: 24px;
+      font-size: 14px;
+      color: #a7b7ca;
+    }
+    .form-status.success {
+      padding: 15px 16px;
+      border: 1px solid rgba(98,220,164,.25);
+      background: rgba(98,220,164,.08);
+      color: #baf0d5;
+      border-radius: 12px;
+    }
+    .form-status.error {
+      padding: 15px 16px;
+      border: 1px solid rgba(255,107,107,.25);
+      background: rgba(255,107,107,.07);
+      color: #ffc3c3;
+      border-radius: 12px;
+    }
+    .hp-field {
+      position: absolute !important;
+      left: -9999px !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+    @media (max-width: 900px) {
+      .support-shell { grid-template-columns: 1fr; }
+      .support-aside { order: -1; }
+    }
+    @media (max-width: 640px) {
+      .support-hero { padding: 56px 20px 22px; }
+      .support-shell { padding: 14px 20px 72px; }
+      .support-card, .support-aside { padding: 22px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="GOAT PRO Studio">
+      <img src="/assets/goatpro-icon.svg" alt="Símbolo GOAT PRO Studio" />
+      <span><strong>GOAT PRO</strong> Studio</span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="/">Início</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/suporte/" aria-current="page">Suporte</a>
+      <a class="nav-cta" href="/#comprar">Comprar</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="support-hero">
+      <span class="eyebrow">SUPORTE OFICIAL</span>
+      <h1 style="font-size:clamp(46px,6vw,72px)"><span>GOAT PRO</span> Studio</h1>
+      <p>Teve algum problema ou ficou com uma dúvida? Abra um chamado e acompanhe a resposta pelo seu e-mail.</p>
+    </section>
+
+    <section class="support-shell">
+      <div class="support-card">
+        <form id="supportForm" class="support-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Nome *</label>
+              <input id="name" name="name" type="text" maxlength="120" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Seu e-mail *</label>
+              <input id="email" name="email" type="email" maxlength="254" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="purchase_email">E-mail usado na compra</label>
+              <input id="purchase_email" name="purchase_email" type="email" maxlength="254" autocomplete="email" />
+              <small>Ajuda a localizar sua licença. Pode deixar em branco se ainda não comprou.</small>
+            </div>
+            <div class="field">
+              <label for="category">Categoria *</label>
+              <select id="category" name="category" required>
+                <option value="">Selecione</option>
+                <option value="instalacao">Instalação</option>
+                <option value="licenca">Licença / serial</option>
+                <option value="camera">Câmera</option>
+                <option value="audio_video">Áudio / vídeo</option>
+                <option value="live_stack">Live Stack</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="subject">Assunto *</label>
+            <input id="subject" name="subject" type="text" maxlength="160" placeholder="Ex.: Minha câmera não aparece no GOAT PRO Studio" required />
+          </div>
+
+          <div class="field">
+            <label for="message">Descreva o problema *</label>
+            <textarea id="message" name="message" maxlength="5000" placeholder="Conte o que aconteceu, qual câmera ou recurso você está usando e, se possível, em que etapa o problema aparece." required></textarea>
+          </div>
+
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Não preencha este campo</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="form-actions">
+            <button id="supportSubmit" class="btn btn-primary support-submit" type="submit">Abrir chamado</button>
+            <span style="color:#7f91aa;font-size:12px">Você receberá o número do chamado por e-mail.</span>
+          </div>
+
+          <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <aside class="support-aside">
+        <span class="eyebrow">CONTATO</span>
+        <h3>Prefere mandar e-mail?</h3>
+        <p>Você também pode escrever diretamente para o suporte oficial.</p>
+        <a class="support-email" href="mailto:suporte@goatprostudio.com.br">suporte@goatprostudio.com.br</a>
+        <div class="support-note">Para assuntos de licença, use de preferência o mesmo e-mail informado na compra. Nunca envie senhas ou dados bancários pelo formulário.</div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="/"><img src="/assets/goatpro-icon.svg" alt="" /><span><strong>GOAT PRO</strong> Studio</span></a>
+    <p>Observe • Empilhe • Detecte • Transmita</p>
+    <p class="copyright">© <span id="year"></span> GOAT PRO Studio. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="/app.js?v=20261013-1"></script>
+  <script>
+    const SUPPORT_ENDPOINT = 'https://azlsdxckgvlkigttkkbr.supabase.co/functions/v1/support-ticket';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF6bHNkeGNrZ3Zsa2lndHRra2JyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3MTQ1NDMsImV4cCI6MjEwNjI5MDU0M30.oIB_D41cRddswjqnRIOnLNB4A16YIcC9Vecgd6uGSnY';
+
+    const supportForm = document.getElementById('supportForm');
+    const supportSubmit = document.getElementById('supportSubmit');
+    const formStatus = document.getElementById('formStatus');
+
+    supportForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      formStatus.className = 'form-status';
+      formStatus.textContent = '';
+
+      if (!supportForm.checkValidity()) {
+        supportForm.reportValidity();
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(supportForm).entries());
+      if (String(data.message || '').trim().length < 15) {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = 'Descreva o problema com um pouco mais de detalhe.';
+        return;
+      }
+
+      supportSubmit.disabled = true;
+      supportSubmit.textContent = 'Enviando...';
+
+      try {
+        const response = await fetch(SUPPORT_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+          throw new Error(result.message || 'Não foi possível abrir o chamado agora.');
+        }
+
+        const ticket = result.ticket_code || 'gerado';
+        formStatus.className = 'form-status success';
+        formStatus.innerHTML = `<strong>Chamado aberto com sucesso: ${ticket}</strong><br>Enviamos a confirmação para o seu e-mail. Guarde esse número para acompanhar o atendimento.`;
+        supportForm.reset();
+
+        if (window.gtag) {
+          window.gtag('event', 'support_ticket_created', {
+            send_to: 'G-T20WCMY2DG',
+            ticket_category: data.category || 'outro'
+          });
+        }
+      } catch (error) {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = error?.message || 'Não foi possível abrir o chamado agora. Tente novamente em alguns minutos.';
+      } finally {
+        supportSubmit.disabled = false;
+        supportSubmit.textContent = 'Abrir chamado';
+      }
+    });
+  </script>
+</body>
+</html>

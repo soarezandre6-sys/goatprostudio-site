@@ -225,3 +225,81 @@ footer p { margin:7px 0; }
   html { scroll-behavior:auto; }
   .reveal { opacity:1; transform:none; transition:none; }
 }
+
+/* Support admin polish: scoped overrides for /admin-suporte/ */
+.admin-wrap .dashboard-card .dash-head h1 {
+  font-size: clamp(38px, 4vw, 54px);
+  line-height: 1.04;
+  letter-spacing: -1.8px;
+  max-width: 760px;
+}
+.admin-wrap .dashboard-card,
+.admin-wrap .detail-card {
+  border-color: rgba(116,179,255,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.32);
+}
+.admin-wrap .dashboard-card { padding: 24px; }
+.admin-wrap .dash-head { align-items: center; }
+.admin-wrap .dash-head .muted { font-size: 14px; }
+.admin-wrap .admin-actions .btn {
+  min-height: 42px;
+  padding: 0 17px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.admin-wrap .summary {
+  gap: 10px;
+  margin: 20px 0;
+}
+.admin-wrap .summary-box {
+  padding: 14px 16px;
+  border-radius: 12px;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.admin-wrap .summary-box span { font-size: 10px; letter-spacing: .1em; }
+.admin-wrap .summary-box strong { font-size: 25px; line-height: 1.1; margin-top: 5px; }
+.admin-wrap .ticket-tools {
+  padding: 13px;
+  gap: 10px;
+  margin: 4px 0 14px;
+  border-radius: 12px;
+}
+.admin-wrap .ticket-search { padding: 10px 12px; border-radius: 9px; font-size: 14px; }
+.admin-wrap .filter-row { gap: 7px; }
+.admin-wrap .filter-btn { padding: 7px 10px; font-size: 11px; }
+.admin-wrap .ticket-list { gap: 10px; margin-top: 14px; }
+.admin-wrap .ticket {
+  padding: 15px 16px;
+  border-radius: 12px;
+}
+.admin-wrap .ticket h3 { margin: 8px 0 4px; font-size: 17px; }
+.admin-wrap .ticket-meta,
+.admin-wrap .ticket-message { font-size: 13px; }
+.admin-wrap .ticket-activity { margin-top: 7px; }
+.admin-wrap .ticket-open-hint { margin-top: 9px; }
+.admin-wrap .detail-card { padding: 22px; }
+.admin-wrap .detail-title { font-size: clamp(24px, 3vw, 32px); letter-spacing: -.6px; }
+.admin-wrap .detail-grid { gap: 10px; margin-top: 16px; }
+.admin-wrap .detail-field { padding: 12px 13px; }
+.admin-wrap .workflow-box,
+.admin-wrap .detail-message,
+.admin-wrap .reply-box { margin-top: 14px; padding: 15px; border-radius: 12px; }
+.admin-wrap .workflow-actions { gap: 8px; }
+.admin-wrap .workflow-btn { padding: 9px 11px; font-size: 13px; }
+.admin-wrap .conversation { margin-top: 16px; gap: 10px; }
+.admin-wrap .bubble { padding: 12px 14px; border-radius: 12px; }
+.admin-wrap .bubble-body { font-size: 14px; line-height: 1.5; }
+.admin-wrap .reply-box textarea { min-height: 120px; padding: 12px; border-radius: 10px; }
+.admin-wrap .empty { padding: 22px; }
+@media (max-width: 760px) {
+  .admin-wrap .dashboard-card .dash-head h1 { font-size: 34px; letter-spacing: -1px; }
+  .admin-wrap .dashboard-card,
+  .admin-wrap .detail-card { padding: 16px; }
+  .admin-wrap .summary { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .admin-wrap .summary-box { min-height: 82px; }
+  .admin-wrap .summary-box strong { font-size: 23px; }
+  .admin-wrap .filter-btn { flex: 1 1 auto; }
+}

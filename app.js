@@ -1,4 +1,5 @@
 const GA_MEASUREMENT_ID = 'G-T20WCMY2DG';
+const GOOGLE_ADS_ID = 'AW-18481898971';
 
 window.dataLayer = window.dataLayer || [];
 window.gtag = window.gtag || function () {
@@ -6,6 +7,7 @@ window.gtag = window.gtag || function () {
 };
 window.gtag('js', new Date());
 window.gtag('config', GA_MEASUREMENT_ID);
+window.gtag('config', GOOGLE_ADS_ID);
 
 const gaScript = document.createElement('script');
 gaScript.async = true;

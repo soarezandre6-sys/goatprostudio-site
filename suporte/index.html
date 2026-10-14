@@ -175,16 +175,6 @@
           </div>
 
           <div class="field">
-            <label for="verification_code">Código de confirmação da compra *</label>
-            <div class="form-actions">
-              <input id="verification_code" name="code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="6 dígitos" required style="max-width:180px" />
-              <button id="requestCode" type="button" class="btn btn-primary">Enviar código</button>
-              <button id="verifyCode" type="button" class="btn btn-primary">Confirmar código</button>
-            </div>
-            <small id="verificationStatus" aria-live="polite">Informe o e-mail da compra e solicite seu código. Válido por 10 minutos.</small>
-          </div>
-
-          <div class="field">
             <label for="subject">Assunto *</label>
             <input id="subject" name="subject" type="text" maxlength="160" placeholder="Ex.: Minha câmera não aparece no GOAT PRO Studio" required />
           </div>
@@ -200,10 +190,19 @@
           </div>
 
           <div class="form-actions">
-            <button id="supportSubmit" class="btn btn-primary support-submit" type="submit">Abrir chamado</button>
+            <button id="supportSubmit" class="btn btn-primary support-submit" type="submit">Enviar chamado</button>
             <span style="color:#7f91aa;font-size:12px">Você receberá o número do chamado por e-mail.</span>
           </div>
 
+          <div id="verificationPanel" class="field" hidden>
+            <label for="verification_code">Confirme seu e-mail para concluir o chamado</label>
+            <p>Se a compra estiver ativa, enviamos um código de 6 dígitos para o e-mail da compra. Digite abaixo para registrar o chamado.</p>
+            <div class="form-actions">
+              <input id="verification_code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="Código de 6 dígitos" style="max-width:180px" />
+              <button id="confirmTicket" type="button" class="btn btn-primary">Confirmar e abrir chamado</button>
+            </div>
+            <small id="verificationStatus" aria-live="polite">Código válido por 10 minutos.</small>
+          </div>
           <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
         </form>
       </div>
@@ -233,98 +232,75 @@
     const supportSubmit = document.getElementById('supportSubmit');
     const formStatus = document.getElementById('formStatus');
 
+    const verificationPanel = document.getElementById('verificationPanel');
     const verificationStatus = document.getElementById('verificationStatus');
-    let confirmedEmail = '';
-    let confirmedCode = '';
-    const purchaseEmailInput = document.getElementById('purchase_email');
     const codeInput = document.getElementById('verification_code');
-    purchaseEmailInput.addEventListener('input', () => { confirmedEmail = ''; confirmedCode = ''; });
-    codeInput.addEventListener('input', () => { confirmedEmail = ''; confirmedCode = ''; });
-    async function verificationRequest(action) {
-      const purchase_email = purchaseEmailInput.value.trim().toLowerCase();
-      const code = codeInput.value.trim();
-      if (!purchaseEmailInput.checkValidity()) { purchaseEmailInput.reportValidity(); return; }
-      const btn = document.getElementById(action === 'request_code' ? 'requestCode' : 'verifyCode');
-      btn.disabled = true;
-      verificationStatus.textContent = 'Aguarde...';
-      try {
-        const response = await fetch(SUPPORT_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
-          body: JSON.stringify({ action, purchase_email, code })
-        });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok || !result.ok) throw new Error(result.message || 'Não foi possível confirmar.');
-        if (action === 'verify_code') { confirmedEmail = purchase_email; confirmedCode = code; }
-        verificationStatus.textContent = result.message;
-      } catch (error) {
-        verificationStatus.textContent = error.message || 'Falha na verificação.';
-      } finally { btn.disabled = false; }
+    const confirmTicket = document.getElementById('confirmTicket');
+    let pendingTicket = null;
+    const headers = { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` };
+
+    async function callSupport(payload) {
+      const response = await fetch(SUPPORT_ENDPOINT, { method: 'POST', headers, body: JSON.stringify(payload) });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.message || 'Não foi possível concluir a solicitação.');
+      return result;
     }
-    document.getElementById('requestCode').addEventListener('click', () => verificationRequest('request_code'));
-    document.getElementById('verifyCode').addEventListener('click', () => verificationRequest('verify_code'));
 
     supportForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       formStatus.className = 'form-status';
       formStatus.textContent = '';
-
-      if (!supportForm.checkValidity()) {
-        supportForm.reportValidity();
+      if (pendingTicket) {
+        verificationPanel.hidden = false;
+        verificationStatus.textContent = 'Confirme o código recebido por e-mail ou atualize a página para iniciar outro chamado.';
         return;
       }
-
-      if (confirmedEmail !== purchaseEmailInput.value.trim().toLowerCase() || confirmedCode !== codeInput.value.trim()) {
-        formStatus.className = 'form-status error';
-        formStatus.textContent = 'Confirme o código enviado ao e-mail da compra antes de abrir o chamado.';
-        return;
-      }
+      if (!supportForm.checkValidity()) { supportForm.reportValidity(); return; }
       const data = Object.fromEntries(new FormData(supportForm).entries());
       if (String(data.message || '').trim().length < 15) {
         formStatus.className = 'form-status error';
         formStatus.textContent = 'Descreva o problema com um pouco mais de detalhe.';
         return;
       }
-
       supportSubmit.disabled = true;
-      supportSubmit.textContent = 'Enviando...';
-
+      supportSubmit.textContent = 'Enviando código...';
       try {
-        const response = await fetch(SUPPORT_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify(data)
-        });
-
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok || !result.ok) {
-          throw new Error(result.message || 'Não foi possível abrir o chamado agora.');
-        }
-
-        const ticket = result.ticket_code || 'gerado';
-        formStatus.className = 'form-status success';
-        formStatus.innerHTML = `<strong>Chamado aberto com sucesso: ${ticket}</strong><br>Enviamos a confirmação para o seu e-mail. Guarde esse número para acompanhar o atendimento.`;
-        supportForm.reset();
-        confirmedEmail = ''; confirmedCode = '';
-        verificationStatus.textContent = 'Para outro chamado, solicite um novo código.';
-
-        if (window.gtag) {
-          window.gtag('event', 'support_ticket_created', {
-            send_to: 'G-T20WCMY2DG',
-            ticket_category: data.category || 'outro'
-          });
-        }
+        const result = await callSupport({action:'request_code',purchase_email:data.purchase_email});
+        pendingTicket = data;
+        verificationPanel.hidden = false;
+        verificationStatus.textContent = result.message || 'Confira seu e-mail para obter o código.';
+        supportSubmit.textContent = 'Aguardando confirmação';
+        codeInput.focus();
       } catch (error) {
         formStatus.className = 'form-status error';
-        formStatus.textContent = error?.message || 'Não foi possível abrir o chamado agora. Tente novamente em alguns minutos.';
-      } finally {
+        formStatus.textContent = error.message || 'Falha ao enviar o código.';
         supportSubmit.disabled = false;
-        supportSubmit.textContent = 'Abrir chamado';
+        supportSubmit.textContent = 'Enviar chamado';
       }
+    });
+
+    confirmTicket.addEventListener('click', async () => {
+      if (!pendingTicket) return;
+      const code = codeInput.value.trim();
+      if (!/^[0-9]{6}$/.test(code)) { verificationStatus.textContent = 'Digite os 6 números recebidos por e-mail.'; codeInput.focus(); return; }
+      confirmTicket.disabled = true;
+      verificationStatus.textContent = 'Confirmando...';
+      try {
+        await callSupport({action:'verify_code',purchase_email:pendingTicket.purchase_email,code});
+        const result = await callSupport({...pendingTicket,code});
+        const ticket = result.ticket_code || 'gerado';
+        formStatus.className = 'form-status success';
+        formStatus.textContent = `Chamado aberto com sucesso: ${ticket}. Enviamos a confirmação para o seu e-mail.`;
+        verificationPanel.hidden = true;
+        pendingTicket = null;
+        supportForm.reset();
+        codeInput.value = '';
+        supportSubmit.disabled = false;
+        supportSubmit.textContent = 'Enviar chamado';
+        if (window.gtag) window.gtag('event','support_ticket_created',{send_to:'G-T20WCMY2DG',ticket_category:result.category||'outro'});
+      } catch(error) {
+        verificationStatus.textContent = error.message || 'Código inválido ou expirado.';
+      } finally { confirmTicket.disabled = false; }
     });
   </script>
 </body>

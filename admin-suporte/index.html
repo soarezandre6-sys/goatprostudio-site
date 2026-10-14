@@ -68,8 +68,8 @@
   <main class="admin-wrap">
     <section id="loginCard" class="admin-card">
       <span class="eyebrow">ÁREA RESTRITA</span><h1>Painel de Suporte</h1>
-      <p>Este painel é reservado à administração do GOAT PRO Studio. O acesso é feito por link seguro enviado por e-mail.</p>
-      <div class="admin-email">soarezandre6@gmail.com</div>
+      <p>Este painel é reservado à administração do GOAT PRO Studio. O acesso é feito por link seguro enviado ao e-mail administrativo cadastrado.</p>
+      <div class="admin-email">s*********6@gmail.com</div>
       <div class="admin-actions"><button id="loginBtn" class="btn btn-primary admin-btn" type="button">Enviar link de acesso</button></div>
       <div id="loginStatus" class="status" role="status" aria-live="polite"></div>
     </section>
@@ -100,10 +100,12 @@
     const ADMIN_EMAIL='soarezandre6@gmail.com';
     const REDIRECT_TO='https://goatprostudio.com.br/admin-suporte/';
     const ADMIN_API=`${SUPABASE_URL}/functions/v1/support-admin`;
+    const LOGIN_COOLDOWN_MS=60000;
+    const LOGIN_COOLDOWN_KEY='goat_support_magic_link_last_sent';
     const supabase=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     const loginCard=document.getElementById('loginCard'),loginBtn=document.getElementById('loginBtn'),loginStatus=document.getElementById('loginStatus'),dashboard=document.getElementById('dashboard'),logoutBtn=document.getElementById('logoutBtn'),refreshBtn=document.getElementById('refreshBtn'),panelStatus=document.getElementById('panelStatus'),ticketList=document.getElementById('ticketList'),ticketDetail=document.getElementById('ticketDetail'),countTotal=document.getElementById('countTotal'),countOpen=document.getElementById('countOpen'),countAttention=document.getElementById('countAttention'),countResolved=document.getElementById('countResolved'),ticketSearch=document.getElementById('ticketSearch'),filterEmpty=document.getElementById('filterEmpty'),filterButtons=[...document.querySelectorAll('[data-filter]')];
-    let currentTickets=[],selectedTicketId=null,activeFilter='all';
-    const esc=(v)=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
+    let currentTickets=[],selectedTicketId=null,activeFilter='all',loginCooldownTimer=null;
+    const esc=(v)=>String(v??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','\"':'&quot;'}[c]));
     const cleanText=(v)=>String(v??'').replace(/\\r\\n/g,'\n').replace(/\\n/g,'\n');
     const categoryLabel=(v)=>({instalacao:'Instalação',licenca:'Licença / serial',camera:'Câmera',audio_video:'Áudio / vídeo',live_stack:'Live Stack',outro:'Outro'}[v]||v||'Outro');
     const statusLabel=(v)=>({open:'Aberto',in_progress:'Em atendimento',waiting_customer:'Aguardando cliente',resolved:'Resolvido',closed:'Encerrado'}[v]||v||'Aberto');
@@ -112,7 +114,9 @@
     function latestMessage(t){const list=messagesOf(t).slice().sort((a,b)=>new Date(a.created_at||0)-new Date(b.created_at||0));return list[list.length-1]||null;}
     function latestActivity(t){const msg=latestMessage(t);const ticketTime=new Date(t?.created_at||0).getTime()||0;const msgTime=new Date(msg?.created_at||0).getTime()||0;return Math.max(ticketTime,msgTime);}
     function needsAttention(t){if(['resolved','closed'].includes(t?.status))return false;const last=latestMessage(t);return !!last&&last.direction==='customer';}
-    function loggedOut(message=''){loginCard.style.display='block';dashboard.classList.remove('dashboard-visible');loginStatus.className='status';loginStatus.textContent=message;}
+    function loggedOut(message=''){loginCard.style.display='block';dashboard.classList.remove('dashboard-visible');loginStatus.className='status';loginStatus.textContent=message;updateLoginCooldown();}
+    function cooldownRemaining(){const last=Number(localStorage.getItem(LOGIN_COOLDOWN_KEY)||0);return Math.max(0,LOGIN_COOLDOWN_MS-(Date.now()-last));}
+    function updateLoginCooldown(){if(loginCooldownTimer){clearTimeout(loginCooldownTimer);loginCooldownTimer=null;}const remaining=cooldownRemaining();if(remaining>0){const seconds=Math.max(1,Math.ceil(remaining/1000));loginBtn.disabled=true;loginBtn.textContent=`Aguarde ${seconds}s`;loginCooldownTimer=setTimeout(updateLoginCooldown,1000);return;}loginBtn.disabled=false;loginBtn.textContent='Enviar link de acesso';}
     function conversationHtml(messages=[]){if(!messages.length)return '<div class="empty">Ainda não há mensagens registradas nesta conversa.</div>';return messages.map(m=>{const who=m.direction==='support'?'Suporte GOAT PRO Studio':'Cliente';const cls=m.direction==='support'?'support':'customer';return `<div class="bubble ${cls}"><div class="bubble-head"><span class="bubble-name">${esc(who)}</span><span class="bubble-date">${esc(dateLabel(m.created_at))}</span></div><div class="bubble-body">${esc(cleanText(m.body))}</div></div>`}).join('');}
     function statusButtonsHtml(current){const items=[['open','Reabrir'],['in_progress','Em atendimento'],['waiting_customer','Aguardando cliente'],['resolved','Resolvido']];return items.map(([value,label])=>`<button class="workflow-btn ${value===current?'current':''} ${value==='resolved'?'resolve':''}" data-next-status="${value}" type="button" ${value===current?'disabled':''}>${label}</button>`).join('');}
     function applyFilters(){const q=String(ticketSearch.value||'').trim().toLowerCase();let shown=0;ticketList.querySelectorAll('.ticket').forEach(el=>{const status=el.dataset.status||'open';const attention=el.dataset.attention==='true';const statusMatch=activeFilter==='all'||(activeFilter==='attention'&&attention)||status===activeFilter||(activeFilter==='resolved'&&status==='closed');const textMatch=!q||el.textContent.toLowerCase().includes(q);const visible=statusMatch&&textMatch;el.style.display=visible?'':'none';if(visible)shown++;});filterEmpty.style.display=currentTickets.length&&shown===0?'block':'none';}
@@ -125,10 +129,11 @@
     async function loggedIn(session){const email=String(session?.user?.email||'').toLowerCase();if(email!==ADMIN_EMAIL){await supabase.auth.signOut();loggedOut('Acesso não autorizado.');loginStatus.className='status err';return;}loginCard.style.display='none';dashboard.classList.add('dashboard-visible');await loadTickets(session);}
     filterButtons.forEach(btn=>btn.addEventListener('click',()=>{activeFilter=btn.dataset.filter||'all';filterButtons.forEach(b=>b.classList.toggle('current',b===btn));applyFilters();}));
     ticketSearch.addEventListener('input',applyFilters);
-    loginBtn.addEventListener('click',async()=>{loginBtn.disabled=true;loginBtn.textContent='Enviando...';loginStatus.className='status';loginStatus.textContent='';try{const {error}=await supabase.auth.signInWithOtp({email:ADMIN_EMAIL,options:{emailRedirectTo:REDIRECT_TO}});if(error)throw error;loginStatus.className='status ok';loginStatus.textContent='Link enviado. Abra o e-mail e clique no link para entrar.';}catch(err){loginStatus.className='status err';loginStatus.textContent=err?.message||'Não foi possível enviar o link de acesso.';}finally{loginBtn.disabled=false;loginBtn.textContent='Enviar link de acesso';}});
+    loginBtn.addEventListener('click',async()=>{const remaining=cooldownRemaining();if(remaining>0){updateLoginCooldown();return;}loginBtn.disabled=true;loginBtn.textContent='Enviando...';loginStatus.className='status';loginStatus.textContent='';try{const {error}=await supabase.auth.signInWithOtp({email:ADMIN_EMAIL,options:{emailRedirectTo:REDIRECT_TO}});if(error)throw error;localStorage.setItem(LOGIN_COOLDOWN_KEY,String(Date.now()));loginStatus.className='status ok';loginStatus.textContent='Link enviado ao e-mail administrativo cadastrado. Abra o e-mail e clique no link para entrar.';}catch(err){loginStatus.className='status err';loginStatus.textContent=err?.message||'Não foi possível enviar o link de acesso.';}finally{updateLoginCooldown();}});
     refreshBtn.addEventListener('click',async()=>{const {data:{session}}=await supabase.auth.getSession();if(session)await loadTickets(session);});
     logoutBtn.addEventListener('click',async()=>{await supabase.auth.signOut();loggedOut('Sessão encerrada.');});
     setInterval(async()=>{const reply=document.getElementById('replyText');if(document.hidden||(reply&&String(reply.value||'').trim()))return;const {data:{session}}=await supabase.auth.getSession();if(session)await loadTickets(session,!!selectedTicketId,false);},60000);
+    updateLoginCooldown();
     const {data:{session}}=await supabase.auth.getSession();if(session)await loggedIn(session);else loggedOut();
     supabase.auth.onAuthStateChange(async(_event,nextSession)=>{if(nextSession)await loggedIn(nextSession);else loggedOut();});
   </script>

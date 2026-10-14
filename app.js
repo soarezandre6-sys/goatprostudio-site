@@ -1,20 +1,5 @@
 const GA_MEASUREMENT_ID = 'G-T20WCMY2DG';
-const GOOGLE_ADS_ID = 'AW-18481898971';
-
-window.dataLayer = window.dataLayer || [];
-window.gtag = window.gtag || function () {
-  window.dataLayer.push(arguments);
-};
-window.gtag('js', new Date());
-window.gtag('config', GOOGLE_ADS_ID);
-window.gtag('config', GA_MEASUREMENT_ID);
-
-// Carrega a Google tag usando diretamente o ID do Google Ads.
-// O mesmo gtag também envia os dados ao GA4 configurado acima.
-const googleTagScript = document.createElement('script');
-googleTagScript.async = true;
-googleTagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`;
-document.head.appendChild(googleTagScript);
+// A tag do Google Ads e do GA4 é inicializada no head do index.html.
 
 const mainNav = document.querySelector('.topbar nav');
 if (mainNav && !mainNav.querySelector('[data-support-link]')) {

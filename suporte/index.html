@@ -156,9 +156,9 @@
 
           <div class="form-row">
             <div class="field">
-              <label for="purchase_email">E-mail usado na compra</label>
-              <input id="purchase_email" name="purchase_email" type="email" maxlength="254" autocomplete="email" />
-              <small>Ajuda a localizar sua licença. Pode deixar em branco se ainda não comprou.</small>
+              <label for="purchase_email">E-mail usado na compra *</label>
+              <input id="purchase_email" name="purchase_email" type="email" maxlength="254" autocomplete="email" required />
+              <small>Suporte técnico exclusivo para compradores com licença ativa.</small>
             </div>
             <div class="field">
               <label for="category">Categoria *</label>
@@ -172,6 +172,16 @@
                 <option value="outro">Outro</option>
               </select>
             </div>
+          </div>
+
+          <div class="field">
+            <label for="verification_code">Código de confirmação da compra *</label>
+            <div class="form-actions">
+              <input id="verification_code" name="code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="6 dígitos" required style="max-width:180px" />
+              <button id="requestCode" type="button" class="btn btn-primary">Enviar código</button>
+              <button id="verifyCode" type="button" class="btn btn-primary">Confirmar código</button>
+            </div>
+            <small id="verificationStatus" aria-live="polite">Informe o e-mail da compra e solicite seu código. Válido por 10 minutos.</small>
           </div>
 
           <div class="field">
@@ -223,6 +233,37 @@
     const supportSubmit = document.getElementById('supportSubmit');
     const formStatus = document.getElementById('formStatus');
 
+    const verificationStatus = document.getElementById('verificationStatus');
+    let confirmedEmail = '';
+    let confirmedCode = '';
+    const purchaseEmailInput = document.getElementById('purchase_email');
+    const codeInput = document.getElementById('verification_code');
+    purchaseEmailInput.addEventListener('input', () => { confirmedEmail = ''; confirmedCode = ''; });
+    codeInput.addEventListener('input', () => { confirmedEmail = ''; confirmedCode = ''; });
+    async function verificationRequest(action) {
+      const purchase_email = purchaseEmailInput.value.trim().toLowerCase();
+      const code = codeInput.value.trim();
+      if (!purchaseEmailInput.checkValidity()) { purchaseEmailInput.reportValidity(); return; }
+      const btn = document.getElementById(action === 'request_code' ? 'requestCode' : 'verifyCode');
+      btn.disabled = true;
+      verificationStatus.textContent = 'Aguarde...';
+      try {
+        const response = await fetch(SUPPORT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+          body: JSON.stringify({ action, purchase_email, code })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Não foi possível confirmar.');
+        if (action === 'verify_code') { confirmedEmail = purchase_email; confirmedCode = code; }
+        verificationStatus.textContent = result.message;
+      } catch (error) {
+        verificationStatus.textContent = error.message || 'Falha na verificação.';
+      } finally { btn.disabled = false; }
+    }
+    document.getElementById('requestCode').addEventListener('click', () => verificationRequest('request_code'));
+    document.getElementById('verifyCode').addEventListener('click', () => verificationRequest('verify_code'));
+
     supportForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       formStatus.className = 'form-status';
@@ -233,6 +274,11 @@
         return;
       }
 
+      if (confirmedEmail !== purchaseEmailInput.value.trim().toLowerCase() || confirmedCode !== codeInput.value.trim()) {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = 'Confirme o código enviado ao e-mail da compra antes de abrir o chamado.';
+        return;
+      }
       const data = Object.fromEntries(new FormData(supportForm).entries());
       if (String(data.message || '').trim().length < 15) {
         formStatus.className = 'form-status error';
@@ -263,6 +309,8 @@
         formStatus.className = 'form-status success';
         formStatus.innerHTML = `<strong>Chamado aberto com sucesso: ${ticket}</strong><br>Enviamos a confirmação para o seu e-mail. Guarde esse número para acompanhar o atendimento.`;
         supportForm.reset();
+        confirmedEmail = ''; confirmedCode = '';
+        verificationStatus.textContent = 'Para outro chamado, solicite um novo código.';
 
         if (window.gtag) {
           window.gtag('event', 'support_ticket_created', {

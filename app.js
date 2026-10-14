@@ -6,13 +6,15 @@ window.gtag = window.gtag || function () {
   window.dataLayer.push(arguments);
 };
 window.gtag('js', new Date());
-window.gtag('config', GA_MEASUREMENT_ID);
 window.gtag('config', GOOGLE_ADS_ID);
+window.gtag('config', GA_MEASUREMENT_ID);
 
-const gaScript = document.createElement('script');
-gaScript.async = true;
-gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-document.head.appendChild(gaScript);
+// Carrega a Google tag usando diretamente o ID do Google Ads.
+// O mesmo gtag também envia os dados ao GA4 configurado acima.
+const googleTagScript = document.createElement('script');
+googleTagScript.async = true;
+googleTagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`;
+document.head.appendChild(googleTagScript);
 
 const mainNav = document.querySelector('.topbar nav');
 if (mainNav && !mainNav.querySelector('[data-support-link]')) {
@@ -42,12 +44,26 @@ if (checkoutButton) {
       return;
     }
 
+    // Aguarda brevemente o envio do evento antes de sair para o checkout da Kiwify.
+    event.preventDefault();
+    const destination = checkoutButton.href;
+    let navigated = false;
+    const continueToCheckout = () => {
+      if (navigated) return;
+      navigated = true;
+      window.location.href = destination;
+    };
+
     window.gtag('event', 'click_comprar', {
       send_to: GA_MEASUREMENT_ID,
-      link_url: checkoutButton.href,
+      link_url: destination,
       link_text: checkoutButton.textContent.trim(),
-      checkout_provider: 'Kiwify'
+      checkout_provider: 'Kiwify',
+      event_callback: continueToCheckout
     });
+
+    // Fallback: nunca prende o cliente no site se a tag estiver bloqueada ou lenta.
+    window.setTimeout(continueToCheckout, 900);
   });
 }
 

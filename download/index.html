@@ -20,6 +20,8 @@
     .delivery-status{border:1px solid rgba(137,170,205,.25);border-radius:13px;padding:15px 17px;background:#0d1420;color:#d4e1ee;margin:18px 0;line-height:1.55}
     .delivery-status[data-kind="error"]{border-color:rgba(247,143,143,.44);color:#ffb9b9}
     .delivery-status[data-kind="success"]{border-color:rgba(105,220,165,.42);color:#9be5ba}
+    .delivery-recovery{display:block;width:100%;text-align:center;cursor:pointer;background:transparent;border:1px solid rgba(221,184,97,.32);color:#e8c883;border-radius:11px;padding:13px;font:inherit;font-size:14px;font-weight:650;margin:12px 0 18px}
+    .delivery-recovery:hover,.delivery-recovery:focus-visible{background:rgba(221,184,97,.08)}
     .delivery-form{display:grid;gap:12px}
     .delivery-form label{font-weight:700;font-size:13px;color:#e2ecfb;display:block}
     .delivery-form input{width:100%;display:block;margin-top:7px;padding:14px 15px;border-radius:12px;border:1px solid #39465b;background:#0c111a;color:white;font-size:15px;outline-offset:3px}
@@ -44,10 +46,11 @@
   <main class="delivery-wrap">
     <section class="delivery-card" aria-labelledby="delivery-title">
       <div class="delivery-logo"><img src="../assets/goatpro-icon.svg" alt="Logotipo GOAT PRO Studio"><span>ENTREGA DIGITAL OFICIAL</span></div>
-      <h1 id="delivery-title">Seu GOAT PRO Studio, com download protegido</h1>
-      <p class="delivery-lead">Após a aprovação da compra, você recebe um link de acesso e sua chave serial por e-mail. Esta página só libera o instalador para licenças válidas.</p>
+      <h1 id="delivery-title">Seu GOAT PRO Studio</h1>
+      <p class="delivery-lead">Entrega digital oficial e protegida. Comprou pela Kiwify? Abra o link exclusivo enviado para o e-mail da compra para liberar seu instalador sem digitar dados novamente.</p>
       <div id="delivery-status" class="delivery-status" role="status" aria-live="polite">Verificando o acesso ao download...</div>
       <a id="delivery-link" class="delivery-button" href="#" hidden rel="noreferrer" referrerpolicy="no-referrer">↓ Baixar instalador para Windows</a>
+      <button type="button" class="delivery-recovery" id="delivery-recovery" aria-controls="delivery-form" aria-expanded="false">Perdeu o link? Recuperar acesso com e-mail e serial</button>
       <form id="delivery-form" class="delivery-form" hidden>
         <p class="delivery-help">Se o link do e-mail expirou ou você perdeu o acesso, use o mesmo e-mail da compra e a chave serial recebida.</p>
         <label for="delivery-email">E-mail usado na compra
@@ -73,9 +76,11 @@
     const status=document.getElementById("delivery-status");
     const form=document.getElementById("delivery-form");
     const button=document.getElementById("delivery-submit");
+    const recovery=document.getElementById("delivery-recovery");
     const download=document.getElementById("delivery-link");
     const showStatus=(text,kind="info")=>{status.textContent=text; status.dataset.kind=kind;};
-    const showForm=()=>{form.hidden=false;};
+    const showForm=()=>{form.hidden=false;recovery.setAttribute("aria-expanded","true");};
+    recovery.addEventListener("click",()=>{form.hidden=!form.hidden;recovery.setAttribute("aria-expanded",String(!form.hidden));});
 
     async function authorize(payload) {
       download.hidden=true;
@@ -99,6 +104,7 @@
         download.hidden=false;
         showStatus("Licença confirmada! Clique no botão para baixar o instalador " + (data.version || "") + ".", "success");
         form.hidden=true;
+        recovery.hidden=true;
       } catch(err) {
         showStatus(err instanceof Error ? err.message : "Falha ao validar a licença.", "error");
         showForm();
@@ -120,8 +126,7 @@
       history.replaceState(null,"",location.pathname);
       authorize({type:"link",token});
     } else {
-      showStatus("Informe o e-mail da compra e sua chave serial para acessar o instalador.");
-      showForm();
+      showStatus("Use o link exclusivo do e-mail da compra para acessar o instalador. Se perdeu o link, escolha a opção de recuperação abaixo.");
     }
   </script>
 </body>

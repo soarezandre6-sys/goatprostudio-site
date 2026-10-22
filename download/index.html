@@ -145,7 +145,7 @@
         if(data.mode==="parts"){
           if(!Array.isArray(data.parts) || data.parts.length<2 || data.parts.length>12 ||
             !/^[a-f0-9]{64}$/i.test(String(data.sha256??"")) ||
-            !/^[a-z0-9_.-]+\\.exe$/i.test(String(data.fileName??"")) ||
+            !new RegExp("^[a-z0-9_.-]+[.]exe$","i").test(String(data.fileName??"")) ||
             !data.parts.every(p=>Number.isSafeInteger(p.size) && p.size>0 && p.size<=45000000)){
             throw new Error("Pacote de download inválido.");
           }

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070a10">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Download seguro | GOAT PRO Studio</title>
+  <meta name="description" content="Acesso protegido ao instalador do GOAT PRO Studio para clientes com licença ativa.">
+  <link rel="icon" href="../assets/goatpro-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .delivery-wrap{max-width:960px;margin:0 auto;padding:100px 20px 80px}
+    .delivery-card{max-width:680px;margin:0 auto;padding:clamp(26px,5vw,52px);border:1px solid rgba(230,184,94,.28);background:linear-gradient(150deg,#151e2a,#080c13);border-radius:26px;box-shadow:0 30px 100px rgba(0,0,0,.38)}
+    .delivery-logo{display:flex;align-items:center;gap:15px;margin-bottom:25px;color:#efd28c;font-weight:850;letter-spacing:.04em}
+    .delivery-logo img{width:52px;height:52px}
+    .delivery-card h1{font-size:clamp(29px,4vw,43px);line-height:1.12;letter-spacing:-1.2px;margin:0 0 14px}
+    .delivery-lead{color:#b5c4d6;font-size:16px;line-height:1.6;margin:0 0 26px}
+    .delivery-status{border:1px solid rgba(137,170,205,.25);border-radius:13px;padding:15px 17px;background:#0d1420;color:#d4e1ee;margin:18px 0;line-height:1.55}
+    .delivery-status[data-kind="error"]{border-color:rgba(247,143,143,.44);color:#ffb9b9}
+    .delivery-status[data-kind="success"]{border-color:rgba(105,220,165,.42);color:#9be5ba}
+    .delivery-form{display:grid;gap:12px}
+    .delivery-form label{font-weight:700;font-size:13px;color:#e2ecfb;display:block}
+    .delivery-form input{width:100%;display:block;margin-top:7px;padding:14px 15px;border-radius:12px;border:1px solid #39465b;background:#0c111a;color:white;font-size:15px;outline-offset:3px}
+    .delivery-form input:focus{border-color:#ddb861;outline:2px solid rgba(221,184,97,.18)}
+    .delivery-button{display:flex;align-items:center;justify-content:center;gap:9px;min-height:51px;width:100%;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:15px;border-radius:11px;text-decoration:none;padding:13px 16px;margin-top:8px;background:#deb761;color:#141316}
+    .delivery-button:disabled{cursor:wait;opacity:.7}
+    .delivery-button[hidden],.delivery-form[hidden]{display:none}
+    .delivery-help{font-size:13px;color:#93a3b9;line-height:1.65}
+    .delivery-help a{color:#e3c47b}
+    .delivery-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:25px 0 10px}
+    .delivery-step{border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:14px;color:#b7c7d7;font-size:13px}
+    .delivery-step strong{display:block;color:#f2d18b;font-size:14px;margin-bottom:5px}
+    .delivery-footer{text-align:center;color:#8794a7;font-size:13px;margin-top:28px}
+    @media(max-width:640px){.delivery-wrap{padding-top:85px}.delivery-steps{grid-template-columns:1fr}.delivery-card{padding:23px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Voltar ao site GOAT PRO Studio"><img src="../assets/goatpro-icon.svg" alt=""><span><strong>GOAT PRO</strong> Studio</span></a>
+    <nav aria-label="Navegação"><a href="/">Site oficial</a><a href="/suporte/">Suporte</a></nav>
+  </header>
+  <main class="delivery-wrap">
+    <section class="delivery-card" aria-labelledby="delivery-title">
+      <div class="delivery-logo"><img src="../assets/goatpro-icon.svg" alt="Logotipo GOAT PRO Studio"><span>ENTREGA DIGITAL OFICIAL</span></div>
+      <h1 id="delivery-title">Seu GOAT PRO Studio, com download protegido</h1>
+      <p class="delivery-lead">Após a aprovação da compra, você recebe um link de acesso e sua chave serial por e-mail. Esta página só libera o instalador para licenças válidas.</p>
+      <div id="delivery-status" class="delivery-status" role="status" aria-live="polite">Verificando o acesso ao download...</div>
+      <a id="delivery-link" class="delivery-button" href="#" hidden rel="noreferrer" referrerpolicy="no-referrer">↓ Baixar instalador para Windows</a>
+      <form id="delivery-form" class="delivery-form" hidden>
+        <p class="delivery-help">Se o link do e-mail expirou ou você perdeu o acesso, use o mesmo e-mail da compra e a chave serial recebida.</p>
+        <label for="delivery-email">E-mail usado na compra
+          <input id="delivery-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="seuemail@exemplo.com">
+        </label>
+        <label for="delivery-key">Chave de licença
+          <input id="delivery-key" name="licenseKey" type="text" autocapitalize="characters" autocomplete="off" spellcheck="false" required maxlength="128" placeholder="GOAT-XXXXX-XXXXX-XXXXX-XXXXX">
+        </label>
+        <button id="delivery-submit" type="submit" class="delivery-button">Verificar compra e liberar download</button>
+      </form>
+      <div class="delivery-steps">
+        <div class="delivery-step"><strong>1. Pagamento aprovado</strong>A Kiwify confirma sua compra.</div>
+        <div class="delivery-step"><strong>2. E-mail enviado</strong>Você recebe seu link e chave serial.</div>
+        <div class="delivery-step"><strong>3. Instalar e ativar</strong>Baixe o instalador Windows e informe sua chave.</div>
+      </div>
+      <p class="delivery-help">A licença comercial é individual e vinculada ao primeiro computador ativado. Não compartilhe sua chave serial nem seu link de acesso. <a href="/suporte/">Precisa de ajuda? Fale com o suporte.</a></p>
+    </section>
+    <div class="delivery-footer">GOAT PRO Studio • Download oficial • Windows 10/11 64 bits</div>
+  </main>
+  <script>
+    "use strict";
+    const API="https://azlsdxckgvlkigttkkbr.supabase.co/functions/v1/protected-download";
+    const status=document.getElementById("delivery-status");
+    const form=document.getElementById("delivery-form");
+    const button=document.getElementById("delivery-submit");
+    const download=document.getElementById("delivery-link");
+    const showStatus=(text,kind="info")=>{status.textContent=text; status.dataset.kind=kind;};
+    const showForm=()=>{form.hidden=false;};
+
+    async function authorize(payload) {
+      download.hidden=true;
+      button.disabled=true;
+      showStatus("Validando a licença e preparando o arquivo...");
+      try {
+        const res=await fetch(API,{
+          method:"POST",
+          mode:"cors",
+          cache:"no-store",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify(payload)
+        });
+        const data=await res.json();
+        if(!res.ok || data.ok!==true || !data.url) throw new Error(data.message || "Falha ao liberar o instalador.");
+        const safeUrl=new URL(data.url);
+        if(safeUrl.protocol!=="https:" || !safeUrl.hostname.endsWith(".supabase.co"))
+          throw new Error("O endereço do instalador não pôde ser validado.");
+        download.href=data.url;
+        download.download="";
+        download.hidden=false;
+        showStatus("Licença confirmada! Clique no botão para baixar o instalador " + (data.version || "") + ".", "success");
+        form.hidden=true;
+      } catch(err) {
+        showStatus(err instanceof Error ? err.message : "Falha ao validar a licença.", "error");
+        showForm();
+      } finally {
+        button.disabled=false;
+      }
+    }
+
+    form.addEventListener("submit",async (event)=>{
+      event.preventDefault();
+      const email=document.getElementById("delivery-email").value.trim();
+      const licenseKey=document.getElementById("delivery-key").value.trim();
+      await authorize({type:"serial",email,licenseKey});
+    });
+
+    const fragment=new URLSearchParams(location.hash.replace(/^#/,""));
+    const token=fragment.get("acesso");
+    if(token){
+      history.replaceState(null,"",location.pathname);
+      authorize({type:"link",token});
+    } else {
+      showStatus("Informe o e-mail da compra e sua chave serial para acessar o instalador.");
+      showForm();
+    }
+  </script>
+</body>
+</html>

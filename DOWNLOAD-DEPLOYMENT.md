@@ -1,38 +1,42 @@
-# Entrega digital protegida - GOAT PRO Studio
+# Entrega Digital Oficial — GOAT PRO Studio
 
-Situação: **estrutura preparada, publicação da entrega direta pendente de hospedagem do instalador**.
+## Estado atual
 
-## Recursos já configurados
+A página `https://goatprostudio.com.br/download/` foi criada no site oficial.
 
-- Página do site: https://goatprostudio.com.br/download/
-- GitHub Pages (site): `download/index.html`
-- Supabase Edge Function: `protected-download` (verifica licença ativa e entrega URL temporária)
-- Banco: `goat_download_links` com token aleatório guardado por hash, validade de 365 dias e RLS fechado
-- Webhook Kiwify: encaminha link exclusivo por e-mail **apenas quando houver instalador comercial publicado**; caso contrário, preserva o modelo anterior de e-mail com chave serial
-- Recuperação do download por e-mail e chave serial, mesmo que o link exclusivo expire
-- A Build 650 comercial não foi alterada
+Visual aprovado: cabeçalho dourado **ENTREGA DIGITAL OFICIAL**, título **Seu GOAT PRO Studio, com download protegido**, formulário visível de e-mail da compra e chave serial, botão **Verificar compra e liberar download**, e três passos de entrega.
 
-## Bloqueio atual
+As funções `protected-download` e `kiwify-webhook` no Supabase foram preparadas para autorizar downloads apenas de licenças ativas. O webhook só inclui o link exclusivo no e-mail quando o instalador já estiver publicado; assim o sistema anterior de Kiwify/Drive continua válido até a troca.
 
-O instalador Build 650 COMERCIAL tem cerca de 179 MB. O projeto Supabase está no plano Free (limite de 50 MB por arquivo no Storage), mesmo que o bucket privado tenha limite próprio maior.
+## Como manter a hospedagem gratuita
 
-**Não execute o workflow de publicação enquanto o limite global do Storage for menor que o instalador.**
-Escolha uma hospedagem que aceite um único arquivo de 179 MB com acesso privado e URL assinada (por exemplo, fazer upgrade do Supabase ou integrar outro serviço de armazenamento compatível).
+O Supabase Free aceita **até 50 MB por arquivo**, embora tenha 1 GB de armazenamento total. Por isso o instalador comercial Build 650 (~179 MB) é dividido no GitHub Actions em **quatro partes privadas menores que 50 MB**.
 
-O bucket `goat-pro-studio-updates` está privado e sem instaladores enviados.
+No download, a página verifica a licença via Supabase, recebe URLs temporárias para as quatro partes, baixa as partes automaticamente, reúne no navegador e confere o hash SHA-256 do instalador completo. O comprador só clica em um botão, sem abrir quatro páginas.
 
-## Etapas para habilitar a opção Supabase
+**Cuidado com os limites gratuitos de transferência:** o plano Free inclui 5 GB de egress padrão + 5 GB de cached egress. Cada download de ~179 MB consome dados; se as cotas forem alcançadas, o serviço pode limitar downloads. Não há cobrança mensal planejada.
 
-1. Verificar ou aumentar o limite global de upload no painel Storage do Supabase, sem ultrapassar o limite do plano.
-2. No repositório privado `soarezandre6-sys/astronight-android`, configurar o GitHub Actions secret `SUPABASE_SERVICE_ROLE_KEY` com o valor **somente no painel GitHub Secrets** (nunca incluir no repositório, chat, logs ou site).
-3. Em Actions, executar `Publish GOAT PRO Studio commercial download`. Esse workflow baixa o instalador da Release privada, verifica SHA-256, publica o arquivo no bucket privado e só então ativa o registro de download.
-4. Testar o link exclusivo de compra aprovada e o acesso alternativo por e-mail/chave com uma licença válida. Também testar chave inválida e licença revogada.
-5. Quando os testes passarem, configurar a **página de obrigado do pagamento aprovado** na Kiwify (Produtos > GOAT PRO Studio > Configurações > Páginas de Obrigado), apontando para `https://goatprostudio.com.br/download/`. O caminho mais direto para cliente continua sendo o link exclusivo enviado no e-mail do serial.
-6. Remover ou atualizar o material antigo do Google Drive na entrega Kiwify, depois que o novo download estiver comprovadamente funcional.
-7. Ajustar o texto da página de vendas para indicar que o link exclusivo já está ativo.
+## O que falta para colocar em produção
 
-## Proteção
+1. No GitHub do repositório privado `soarezandre6-sys/astronight-android`, abra **Settings → Secrets and variables → Actions → New repository secret**.
+2. Cadastre o segredo **SUPABASE_SERVICE_ROLE_KEY** com a **chave secreta do projeto Supabase `goat-pro-licensing`**, copiada exclusivamente do painel autorizado. Nunca cole a chave no código, mensagens de chat ou página web. É uma credencial privilegiada; só deve ficar como Secret.
+3. No GitHub Actions do mesmo repositório, execute **Publish GOAT PRO Studio commercial download**. O workflow usa a Release `build-650-comercial`, valida o hash SHA-256, divide o instalador em partes e envia para o bucket privado `goat-pro-studio-updates`. Só depois de carregar com sucesso registra o instalador na tabela `goat_product_updates`.
+4. Teste na página `/download/`: licença válida, licença inválida, arquivo baixado e SHA-256. Teste também recuperação com e-mail/chave serial e link exclusivo de um comprador.
+5. **Só após sucesso dos testes** atualize a entrega da Kiwify ou a página de obrigado para enviar compradores a `https://goatprostudio.com.br/download/`, removendo os links antigos do Drive. A configuração do checkout exige ação na conta Kiwify (não foi alterada).
+6. Depois, atualizar texto comercial do site para refletir a entrega direta ativa.
 
-A página HTML é pública como qualquer site estático; **o download do instalador não é público**. O servidor valida a compra ativa em todas as solicitações e devolve URL de armazenamento privado válida por cinco minutos. Se o comprador perdeu o link, utiliza o e-mail e a chave serial.
+## Garantias
 
-Avisos do Windows SmartScreen não são resolvidos por isso; necessitam assinatura digital de código e reputação da aplicação.
+- **Não alterar** a Build 650 Comercial nem o sistema de ativação existente.
+- O código fonte do aplicativo permanece privado.
+- Os quatro arquivos ficam em bucket privado do Supabase, não em links públicos permanentes.
+- A página HTML em si pode ser aberta por qualquer pessoa, mas o servidor só entrega URLs temporárias a compradores com licença ativa.
+- O instalador só se torna utilizável com uma chave serial válida.
+- O aviso do SmartScreen do Windows exige trabalho separado de assinatura digital; essa página não o elimina.
+
+## Referências técnicas
+
+- Workflow: `soarezandre6-sys/astronight-android/.github/workflows/publish-commercial-download-650.yml`
+- Página: `soarezandre6-sys/goatprostudio-site/download/index.html`
+- Banco: tabela `goat_product_updates.download_parts` e tabela privada `goat_download_links`
+- Funções Supabase: `protected-download` e `kiwify-webhook`

@@ -75,6 +75,55 @@
     const form=document.getElementById("delivery-form");
     const button=document.getElementById("delivery-submit");
     const download=document.getElementById("delivery-link");
+    let currentParts=null;
+    let downloading=false;
+    const hex=(buffer)=>Array.from(new Uint8Array(buffer)).map(b=>b.toString(16).padStart(2,"0")).join("");
+    const safeDownloadURL=(raw)=>{
+      const u=new URL(String(raw));
+      if(u.protocol!=="https:" || !u.hostname.endsWith(".supabase.co")) throw new Error("Endereço de download inválido.");
+      return u.href;
+    };
+    download.addEventListener("click",async(event)=>{
+      if(!currentParts)return;
+      event.preventDefault();
+      if(downloading)return;
+      downloading=true;
+      download.textContent="Baixando e verificando...";
+      const pkg=currentParts;
+      try {
+        const chunks=[];
+        const total=pkg.parts.reduce((sum,p)=>sum+p.size,0);
+        let received=0;
+        for(const part of pkg.parts){
+          const response=await fetch(safeDownloadURL(part.url),{method:"GET",cache:"no-store"});
+          if(!response.ok)throw new Error("Não foi possível receber uma parte do instalador. Tente novamente.");
+          const buffer=await response.arrayBuffer();
+          if(buffer.byteLength!==part.size)throw new Error("O tamanho do instalador não confere. Tente novamente.");
+          chunks.push(buffer);
+          received+=buffer.byteLength;
+          showStatus("Transferindo instalador: "+Math.round(received*100/total)+"%...");
+        }
+        const binary=new Blob(chunks,{type:"application/octet-stream"});
+        showStatus("Verificando a integridade do instalador...");
+        const digest=hex(await crypto.subtle.digest("SHA-256",await binary.arrayBuffer()));
+        if(digest.toLowerCase()!==pkg.sha256.toLowerCase())
+          throw new Error("Verificação de segurança não confere; download descartado.");
+        const blobUrl=URL.createObjectURL(binary);
+        const link=document.createElement("a");
+        link.href=blobUrl;
+        link.download=pkg.fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(()=>URL.revokeObjectURL(blobUrl),60000);
+        showStatus("Instalador verificado. O download foi iniciado.","success");
+      } catch(error){
+        showStatus(error instanceof Error?error.message:"Não foi possível baixar o instalador.","error");
+      } finally {
+        downloading=false;
+        download.textContent="↓ Baixar instalador para Windows";
+      }
+    });
     const showStatus=(text,kind="info")=>{status.textContent=text; status.dataset.kind=kind;};
     const showForm=()=>{form.hidden=false;};
 
@@ -91,12 +140,24 @@
           body:JSON.stringify(payload)
         });
         const data=await res.json();
-        if(!res.ok || data.ok!==true || !data.url) throw new Error(data.message || "Falha ao liberar o instalador.");
-        const safeUrl=new URL(data.url);
-        if(safeUrl.protocol!=="https:" || !safeUrl.hostname.endsWith(".supabase.co"))
-          throw new Error("O endereço do instalador não pôde ser validado.");
-        download.href=data.url;
-        download.download="";
+        if(!res.ok || data.ok!==true) throw new Error(data.message || "Falha ao liberar o instalador.");
+        currentParts=null;
+        if(data.mode==="parts"){
+          if(!Array.isArray(data.parts) || data.parts.length<2 || data.parts.length>12 ||
+            !/^[a-f0-9]{64}$/i.test(String(data.sha256??"")) ||
+            !/^[a-z0-9_.-]+\\.exe$/i.test(String(data.fileName??"")) ||
+            !data.parts.every(p=>Number.isSafeInteger(p.size) && p.size>0 && p.size<=45000000)){
+            throw new Error("Pacote de download inválido.");
+          }
+          data.parts.forEach(p=>safeDownloadURL(p.url));
+          currentParts={parts:data.parts, sha256:data.sha256, fileName:data.fileName};
+          download.href="#download";
+          download.removeAttribute("download");
+        } else {
+          if(!data.url) throw new Error("O arquivo ainda não está disponível.");
+          download.href=safeDownloadURL(data.url);
+          download.removeAttribute("download");
+        }
         download.hidden=false;
         showStatus("Licença confirmada! Clique no botão para baixar o instalador " + (data.version || "") + ".", "success");
         form.hidden=true;

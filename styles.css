@@ -303,3 +303,27 @@ footer p { margin:7px 0; }
   .admin-wrap .summary-box strong { font-size: 23px; }
   .admin-wrap .filter-btn { flex: 1 1 auto; }
 }
+
+/* GOAT SALES: hierarquia comercial da página inicial (versão de teste). */
+.hero h1 { font-size:clamp(43px, 5.3vw, 74px); line-height:1.03; }
+.hero .tagline { letter-spacing:1.4px; line-height:1.7; }
+.hero .hero-actions .btn-primary { background:linear-gradient(135deg, #e6b85e, #b48227); color:#081019; box-shadow:0 14px 38px rgba(230,184,94,.17); }
+.sales-benefits-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.sales-step { padding:27px; background:linear-gradient(155deg,rgba(22,32,49,.87),rgba(10,15,23,.89)); border:1px solid rgba(230,184,94,.18); border-radius:18px; }
+.sales-step > span { color:var(--gold); font-size:12px; font-weight:900; letter-spacing:1.8px; }
+.sales-step h3 { margin:18px 0 10px; font-size:22px; line-height:1.2; }
+.sales-step p { margin:0; color:var(--muted); }
+.sales-inline-cta { margin-top:22px; padding:18px 22px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; border:1px solid rgba(230,184,94,.23); border-radius:14px; background:rgba(230,184,94,.045); }
+.sales-inline-cta a { color:#efcb86; text-decoration:underline; text-underline-offset:4px; font-weight:800; }
+.sales-demo { padding-top:90px; padding-bottom:90px; }
+.sales-demo .showcase-card { max-width:1010px; margin:0 auto 20px; }
+.sales-demo-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+@media (max-width: 1050px) { .sales-benefits-grid { grid-template-columns:1fr; } }
+@media (max-width: 760px) {
+  .hero h1 { font-size:clamp(38px, 9vw, 52px); }
+  .hero .tagline { font-size:11px; letter-spacing:.8px; }
+  .hero-actions .btn { width:100%; }
+  .sales-benefits-grid { gap:12px; }
+  .sales-step { padding:23px; }
+  .sales-demo-cta .btn { width:100%; }
+}

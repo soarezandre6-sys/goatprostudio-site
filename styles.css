@@ -303,3 +303,101 @@ footer p { margin:7px 0; }
   .admin-wrap .summary-box strong { font-size: 23px; }
   .admin-wrap .filter-btn { flex: 1 1 auto; }
 }
+
+/* GOAT SALES - Experimento reversível: somente a primeira tela (hero), 25/10/2026. */
+.hero {
+  max-width: 1440px;
+  min-height: 640px;
+  padding: 54px 46px 62px;
+  grid-template-columns: minmax(0, 1.07fr) minmax(0, 1fr);
+  gap: 26px;
+}
+.hero-copy { max-width: 740px; }
+.hero .eyebrow {
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 1.9px;
+  color: #e6b85e;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: clamp(43px, 4.75vw, 68px);
+  letter-spacing: -2.1px;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.hero h1 span { color: var(--gold); }
+.hero .tagline {
+  font-size: 13px;
+  line-height: 1.55;
+  letter-spacing: 1.45px;
+  margin-top: 20px;
+}
+.hero .lead {
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.56;
+  margin: 20px 0 23px;
+  max-width: 690px;
+}
+.hero .lead strong { color: #f0f5ff; font-weight: 750; }
+.hero .hero-actions { gap: 12px; }
+.hero .hero-actions .btn {
+  min-height: 55px;
+  font-size: 15px;
+  padding: 0 22px;
+}
+.hero .hero-actions .btn-primary {
+  box-shadow: 0 12px 38px rgba(0,104,255,.35);
+  border: 1px solid rgba(145,216,255,.28);
+}
+.hero .hero-badges { gap: 8px; margin-top: 20px; }
+.hero .hero-badges span {
+  color: #e6eaf3;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 7px 12px;
+  border-color: rgba(116,179,255,.25);
+  background: rgba(28,54,99,.25);
+}
+.hero-compatibility {
+  margin: 12px 0 0;
+  max-width: 620px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #a7b5ca;
+}
+.hero .media-frame {
+  box-shadow: 0 32px 90px rgba(0,0,0,.38), 0 0 55px rgba(65,128,255,.14);
+}
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.03fr) minmax(0, .97fr);
+    padding: 55px 30px 58px;
+    gap: 18px;
+  }
+  .hero h1 { font-size: clamp(37px, 4.6vw, 52px); }
+  .hero .lead { font-size: 17px; }
+  .hero .hero-actions .btn { font-size: 13px; padding: 0 16px; }
+}
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 48px 24px 58px;
+    min-height: auto;
+  }
+  .hero-copy { max-width: 760px; }
+  .hero h1 { font-size: clamp(41px, 7vw, 62px); }
+  .hero .lead { font-size: 18px; }
+  .hero-media { width: 100%; max-width: 760px; }
+}
+@media (max-width: 760px) {
+  .hero { padding: 44px 20px 52px; gap: 24px; }
+  .hero h1 { font-size: clamp(36px, 8.6vw, 50px); letter-spacing: -1.5px; line-height: 1.08; }
+  .hero .eyebrow { font-size: 12px; letter-spacing: 1.5px; }
+  .hero .tagline { font-size: 11px; letter-spacing: 1px; }
+  .hero .lead { font-size: 16px; line-height: 1.55; }
+  .hero .hero-actions .btn { width: 100%; font-size: 15px; min-height: 51px; }
+  .hero .hero-badges span { font-size: 11px; padding: 6px 9px; }
+  .hero .hero-compatibility { font-size: 11px; }
+}

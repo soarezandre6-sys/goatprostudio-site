@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" fill="none">
+<defs><linearGradient id="b" x1="0" y1="0" x2="900" y2="600"><stop stop-color="#09203B"/><stop offset="1" stop-color="#080C15"/></linearGradient><radialGradient id="n"><stop stop-color="#E59BB4" stop-opacity=".85"/><stop offset=".47" stop-color="#665DB9" stop-opacity=".5"/><stop offset="1" stop-color="#162844" stop-opacity="0"/></radialGradient></defs>
+<rect width="900" height="600" rx="24" fill="url(#b)"/>
+<rect x="74" y="110" width="570" height="359" rx="20" fill="#071321" stroke="#3F78B4" stroke-width="5"/><rect x="98" y="135" width="521" height="294" rx="11" fill="#0D1D35"/>
+<circle cx="359" cy="279" r="151" fill="url(#n)"/><ellipse cx="359" cy="282" rx="128" ry="51" transform="rotate(-11 359 282)" fill="#D8B6EF" opacity=".18"/><circle cx="359" cy="282" r="7" fill="#FFF5EE"/><g fill="#D8EDFF"><circle cx="130" cy="171" r="2"/><circle cx="172" cy="353" r="2"/><circle cx="510" cy="177" r="2"/><circle cx="548" cy="385" r="1.5"/></g>
+<rect x="117" y="156" width="193" height="49" rx="13" fill="#300F1A" stroke="#C65567"/><circle cx="151" cy="180" r="10" fill="#FF5469"/><text x="172" y="191" fill="#FFE7ED" font-family="Arial,sans-serif" font-size="28" font-weight="800">AO VIVO</text>
+<path d="M686 231Q732 281 686 331M724 190Q805 281 724 372" stroke="#79C2FF" stroke-width="12" stroke-linecap="round" fill="none"/><circle cx="665" cy="281" r="20" fill="#FFD49A"/>
+<rect x="154" y="485" width="433" height="21" rx="10" fill="#1B3759"/><rect x="154" y="485" width="289" height="21" rx="10" fill="#D8B073"/><circle cx="450" cy="496" r="22" fill="#F5D69E"/>
+<text x="112" y="562" fill="#F1CD8B" font-family="Arial,sans-serif" font-size="42" font-weight="800">TRANSMITA SUA OBSERVAÇÃO</text>
+</svg>

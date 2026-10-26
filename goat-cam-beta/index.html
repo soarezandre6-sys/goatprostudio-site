@@ -47,6 +47,11 @@
     .beta-official p{margin:0 0 12px;color:#c5d2e0;line-height:1.6}
     .beta-official a{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:10px;background:#e6b85e;color:#111827;font-weight:800;text-align:center;text-decoration:none}
     .beta-official small{display:block;color:#aebed1;margin-top:12px;line-height:1.65}
+    .beta-actions{display:flex;flex-wrap:wrap;gap:12px;margin:15px 0 8px}
+    .beta-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 16px;border-radius:10px;font-weight:800;background:#e6b85e;color:#111827;text-align:center;text-decoration:none}
+    .beta-actions a.secondary{background:#142233;color:#f2d18b;border:1px solid rgba(230,184,94,.48)}
+    .beta-after-signup{border:1px solid rgba(92,202,148,.35);background:rgba(69,166,113,.10);padding:18px;border-radius:12px;margin-top:14px}
+    .beta-after-signup[hidden]{display:none}
     .beta-faq{margin-top:34px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px}
     .beta-faq details{margin:8px 0;background:#0d1420;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px 18px}
     .beta-faq summary{font-weight:750;cursor:pointer}
@@ -107,6 +112,14 @@
           </label>
           <button class="beta-button" id="betaSubmit" type="submit">Quero participar do teste</button>
           <div id="betaStatus" class="beta-status" role="status" aria-live="polite"></div>
+          <div id="betaNext" class="beta-after-signup" hidden>
+            <strong>Agora são mais dois passos para instalar o GOAT Cam:</strong>
+            <div class="beta-actions">
+              <a href="https://groups.google.com/g/goat-cam-testadores" target="_blank" rel="noopener noreferrer">1. Entrar no grupo</a>
+              <a class="secondary" href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">2. Aceitar teste na Play</a>
+            </div>
+            <p class="beta-small">Entre no grupo usando a mesma Conta Google do celular. Depois volte aqui e aceite o teste na Play. O cadastro sozinho não é contado como testador.</p>
+          </div>
         </form>
         <p class="beta-small">O formulário registra seu interesse, mas ainda não adiciona sua conta à lista oficial da Play Console. Isso acontece quando o GOAT PRO Studio confirma o convite e você aceita participar pelo link oficial do Google.</p>
       </div>
@@ -116,14 +129,17 @@
       <h2>Como será o acesso ao aplicativo?</h2>
       <div class="beta-steps">
         <div class="beta-step"><strong>1. Solicite participação</strong><p>Registre seu e-mail Google no formulário. Isso não inclui automaticamente sua conta no teste fechado.</p></div>
-        <div class="beta-step"><strong>2. Entre no Google Groups</strong><p>Você precisa ser membro do grupo de testadores autorizado pela Play Console. Enviaremos as orientações de ingresso. Use a mesma conta Google do celular.</p></div>
+        <div class="beta-step"><strong>2. Entre no Google Groups</strong><p>Abra o link do grupo abaixo e clique em Participar do grupo, usando a mesma conta Google do celular. O grupo permite entrada voluntária.</p></div>
         <div class="beta-step"><strong>3. Aceite o teste no Google Play</strong><p>Depois que estiver no grupo, abra o link oficial abaixo, confirme a participação e instale o GOAT Cam pelo Google Play.</p></div>
       </div>
       <div class="beta-official" aria-labelledby="beta-play-title">
-        <h3 id="beta-play-title">Já faz parte do grupo de testadores?</h3>
-        <p>Se sua conta Google já é membro do grupo <strong>goat-cam-testadores@googlegroups.com</strong>, você pode aceitar o teste fechado e instalar a versão disponível pelo link oficial.</p>
-        <a href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">Aceitar teste na Google Play</a>
-        <small>Este link não adiciona ninguém ao Google Groups. Se aparecer uma mensagem de app indisponível ou conta não autorizada, confira se você entrou no grupo e se está usando a mesma conta Google.</small>
+        <h3 id="beta-play-title">Participe e instale — dois passos oficiais</h3>
+        <p>Depois de registrar seu interesse no formulário, <strong>entre no Google Groups</strong> com a mesma conta Google do Android. Em seguida, aceite o teste na Play Store. Não precisa enviar pedido de convite manual.</p>
+        <div class="beta-actions">
+          <a href="https://groups.google.com/g/goat-cam-testadores" target="_blank" rel="noopener noreferrer">1. Participar do Google Groups</a>
+          <a class="secondary" href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">2. Aceitar teste na Google Play</a>
+        </div>
+        <small>O link da Google Play não adiciona sua conta ao grupo. Se o Google mostrar que o app não está disponível, confira a associação ao grupo, a conta Google ativa e tente novamente após alguns minutos.</small>
       </div>
       <details><summary>Preencher o formulário já me transforma em testador?</summary><p>Não. O cadastro apenas registra seu interesse. Para contar como testador, é necessário entrar no grupo autorizado e aceitar o convite oficial do Google Play usando a mesma conta Google.</p></details>
       <details><summary>O aplicativo já está disponível para todos na Google Play?</summary><p>Não. O GOAT Cam ainda está em teste fechado. Somente contas autorizadas que aceitem o convite podem instalar a versão de testes pelo Google Play.</p></details>
@@ -143,6 +159,7 @@
       const form=document.getElementById('betaSignup');
       const status=document.getElementById('betaStatus');
       const button=document.getElementById('betaSubmit');
+      const next=document.getElementById('betaNext');
       const endpoint='https://azlsdxckgvlkigttkkbr.supabase.co/functions/v1/goat-cam-beta-signup';
       form.addEventListener('submit',async function(event){
         event.preventDefault();
@@ -152,6 +169,7 @@
         button.disabled=true;
         status.dataset.status='';
         status.textContent='Registrando seu interesse...';
+        next.hidden=true;
         try{
           const radio=form.querySelector('input[name="applicant_type"]:checked');
           const payload={
@@ -165,8 +183,9 @@
           });
           const data=await res.json();
           if(!res.ok||!data.ok) throw new Error(data.message||'Não foi possível enviar sua inscrição.');
-          status.textContent=data.message||'Inscrição registrada!';
+          status.textContent='Cadastro recebido! Siga os dois links abaixo para entrar no grupo e aceitar o teste fechado na Play Store.';
           status.dataset.status='ok';
+          next.hidden=false;
           form.reset();
         }catch(err){
           status.textContent=err instanceof Error?err.message:'Falha de conexão. Tente novamente.';

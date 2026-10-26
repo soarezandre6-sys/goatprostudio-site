@@ -9,14 +9,14 @@
   <link rel="icon" href="/assets/goatpro-icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css?v=20261025-visuais-2">
   <style>
-    .beta-shell{max-width:1100px;margin:0 auto;padding:72px 24px 88px}
-    .beta-intro{max-width:900px;text-align:center;margin:0 auto 38px}
+    .beta-shell{max-width:1100px;margin:0 auto;padding:40px 24px 78px}
+    .beta-intro{max-width:900px;text-align:center;margin:0 auto 24px}
     .beta-kicker{color:#e6b85e;font-size:13px;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
-    .beta-intro h1{font-size:clamp(38px,6.4vw,72px);line-height:1.1;margin:14px 0 16px;letter-spacing:-.04em}
+    .beta-intro h1{font-size:clamp(34px,5.2vw,58px);line-height:1.09;margin:10px 0 13px;letter-spacing:-.04em}
     .beta-intro h1 em{color:#f2c66b;font-style:normal}
     .beta-lead{color:#b5c4d6;font-size:clamp(16px,2.2vw,20px);line-height:1.65;margin:0 auto;max-width:770px}
     .beta-pill{display:inline-block;border:1px solid rgba(230,184,94,.3);color:#f2d58d;padding:8px 14px;border-radius:50px;background:rgba(230,184,94,.07);font-size:13px;font-weight:750;margin-bottom:14px}
-    .beta-grid{display:grid;grid-template-columns:1.07fr .93fr;gap:22px;align-items:start}
+    .beta-grid{display:grid;grid-template-columns:.98fr 1.02fr;gap:20px;align-items:start}
     .beta-card{border:1px solid rgba(230,184,94,.22);border-radius:22px;background:linear-gradient(155deg,#141d29,#090e17);box-shadow:0 22px 65px rgba(0,0,0,.26);padding:clamp(24px,4vw,36px)}
     .beta-card h2{font-size:clamp(23px,3vw,31px);line-height:1.25;letter-spacing:-.02em;margin:0 0 12px}
     .beta-card p{color:#b4c4d7;line-height:1.65}
@@ -38,27 +38,31 @@
     .beta-status[data-status="ok"]{padding:13px;border-radius:11px;color:#b6ebc9;background:rgba(50,154,98,.13);border:1px solid rgba(50,154,98,.25)}
     .beta-status[data-status="error"]{padding:13px;border-radius:11px;color:#ffd3c7;background:rgba(194,99,75,.12);border:1px solid rgba(194,99,75,.28)}
     .beta-small{font-size:12px!important;color:#98a8bc!important}
-    .beta-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 28px}
-    .beta-step{background:#0c1420;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:19px}
-    .beta-step strong{display:block;color:#f4d58f;margin-bottom:7px}
-    .beta-step p{margin:0;font-size:14px;color:#b2c0d2}
-    .beta-official{border:1px solid rgba(230,184,94,.3);border-radius:16px;padding:20px;background:rgba(230,184,94,.055);margin:20px 0 24px}
-    .beta-official h3{margin:0 0 8px;font-size:20px;color:#f3d997}
-    .beta-official p{margin:0 0 12px;color:#c5d2e0;line-height:1.6}
-    .beta-official a{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:10px;background:#e6b85e;color:#111827;font-weight:800;text-align:center;text-decoration:none}
-    .beta-official small{display:block;color:#aebed1;margin-top:12px;line-height:1.65}
-    .beta-actions{display:flex;flex-wrap:wrap;gap:12px;margin:15px 0 8px}
-    .beta-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 16px;border-radius:10px;font-weight:800;background:#e6b85e;color:#111827;text-align:center;text-decoration:none}
-    .beta-actions a.secondary{background:#142233;color:#f2d18b;border:1px solid rgba(230,184,94,.48)}
-    .beta-after-signup{border:1px solid rgba(92,202,148,.35);background:rgba(69,166,113,.10);padding:18px;border-radius:12px;margin-top:14px}
+    .beta-signup-card{scroll-margin-top:95px}
+    .beta-signup-card .beta-pill{font-size:11px;margin:0 0 12px;padding:6px 11px}
+    .beta-progress{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:18px 0}
+    .beta-progress span{background:#0b1523;border:1px solid rgba(255,255,255,.13);padding:9px 5px;border-radius:8px;text-align:center;font-size:12px;color:#b5c7da;font-weight:750}
+    .beta-progress span.active{border-color:rgba(230,184,94,.65);background:rgba(230,184,94,.13);color:#f3d58f}
+    .beta-progress span.done{border-color:rgba(79,191,134,.35);color:#9ad9b7}
+    .beta-status[hidden],.beta-pre-note[hidden],.beta-progress[hidden],.beta-signup-card form[hidden]{display:none}
+    .beta-after-signup{margin-top:14px}
     .beta-after-signup[hidden]{display:none}
+    .beta-after-signup h3{font-size:21px;color:#f3d58f;margin:0 0 12px}
+    .beta-after-signup p{line-height:1.58;font-size:14px;margin:0 0 12px}
+    .beta-next-step{background:#0d1624;border:1px solid rgba(230,184,94,.32);padding:15px;border-radius:13px;margin:12px 0}
+    .beta-next-step strong{color:#f0d087;display:block;font-size:15px}
+    .beta-next-step p{font-size:13px;margin:7px 0 13px;color:#c1ccdb}
+    .beta-next-link{display:flex;align-items:center;justify-content:center;background:#e6b85e;color:#10131a!important;border-radius:11px;padding:13px 12px;font-weight:850!important;text-decoration:none!important;text-align:center;min-height:50px}
+    .beta-next-link.secondary{background:#203249;color:#f5d48a!important;border:1px solid rgba(230,184,94,.48)}
+    .beta-next-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
+    .beta-restart{border:0;background:none;text-decoration:underline;color:#d5c08c;cursor:pointer;padding:8px 0;font:inherit;font-size:13px}
     .beta-faq{margin-top:34px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px}
     .beta-faq details{margin:8px 0;background:#0d1420;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px 18px}
     .beta-faq summary{font-weight:750;cursor:pointer}
     .beta-faq p{font-size:14px}
     .beta-link{color:#f2ce84;text-decoration:underline;text-underline-offset:3px}
     .beta-honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
-    @media(max-width:790px){.beta-grid{grid-template-columns:1fr}.beta-steps{grid-template-columns:1fr}.beta-shell{padding:48px 18px 64px}.beta-card{padding:24px}.topbar nav{gap:12px}}
+    @media(max-width:790px){.beta-grid{grid-template-columns:1fr}.beta-shell{padding:25px 18px 58px}.beta-card{padding:24px}.topbar nav{gap:12px}.beta-intro{margin-bottom:19px}}
   </style>
 </head>
 <body>
@@ -87,12 +91,16 @@
         <p class="beta-small">Versão beta: recursos podem falhar ou mudar. A integração e o desempenho variam conforme celular, câmera, rede e computador. O acesso ao teste não inclui uma licença permanente da futura versão Pro.</p>
       </div>
 
-      <div class="beta-card">
-        <h2>Solicite seu convite gratuito</h2>
-        <p>Informe o e-mail da <strong>conta Google usada no seu Android</strong>. Entraremos em contato com as instruções oficiais do teste fechado.</p>
+      <div class="beta-card beta-signup-card" id="betaSignupCard">
+        <span class="beta-pill" id="betaStageLabel">COMECE AQUI · PASSO 1 DE 3</span>
+        <h2 id="betaSignupTitle">Participe do GOAT Cam Beta</h2>
+        <p id="betaSignupLead">Preencha seus dados. Ao clicar em <strong>Continuar</strong>, os botões do Google Groups e da Google Play aparecerão <strong>aqui mesmo</strong>, automaticamente.</p>
+        <div class="beta-progress" id="betaProgress" aria-label="Etapas para instalar o teste">
+          <span class="active">1. Cadastro</span><span>2. Grupo</span><span>3. Google Play</span>
+        </div>
         <form id="betaSignup" novalidate>
           <div class="beta-field">
-            <label for="betaEmail">E-mail da conta Google</label>
+            <label for="betaEmail">E-mail da conta Google no Android</label>
             <input class="beta-input" type="email" id="betaEmail" name="email" maxlength="254" autocomplete="email" required placeholder="seuemail@gmail.com">
           </div>
           <div class="beta-field">
@@ -108,39 +116,33 @@
           </div>
           <label class="beta-consent" for="betaConsent">
             <input type="checkbox" id="betaConsent" required>
-            <span>Concordo em receber e-mails sobre minha inscrição, o convite e orientações do GOAT Cam Beta. Posso solicitar a exclusão do cadastro pelo suporte.</span>
+            <span>Concordo em receber os e-mails de inscrição, instruções e feedback do teste. Posso solicitar a exclusão do cadastro pelo suporte.</span>
           </label>
-          <button class="beta-button" id="betaSubmit" type="submit">Quero participar do teste</button>
-          <div id="betaStatus" class="beta-status" role="status" aria-live="polite"></div>
-          <div id="betaNext" class="beta-after-signup" hidden>
-            <strong>Agora são mais dois passos para instalar o GOAT Cam:</strong>
-            <div class="beta-actions">
-              <a href="https://groups.google.com/g/goat-cam-testadores" target="_blank" rel="noopener noreferrer">1. Entrar no grupo</a>
-              <a class="secondary" href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">2. Aceitar teste na Play</a>
-            </div>
-            <p class="beta-small">Entre no grupo usando a mesma Conta Google do celular. Depois volte aqui e aceite o teste na Play. O cadastro sozinho não é contado como testador.</p>
-          </div>
+          <button class="beta-button" id="betaSubmit" type="submit">Continuar para instalar o GOAT Cam</button>
         </form>
-        <p class="beta-small">O formulário registra seu interesse, mas ainda não adiciona sua conta à lista oficial da Play Console. Isso acontece quando o GOAT PRO Studio confirma o convite e você aceita participar pelo link oficial do Google.</p>
+        <div id="betaStatus" class="beta-status" role="status" aria-live="polite" hidden></div>
+        <div id="betaNext" class="beta-after-signup" hidden>
+          <h3>Agora é só entrar no grupo e instalar!</h3>
+          <p>Seu cadastro no GOAT PRO STUDIO foi recebido. Para participar de verdade do teste fechado, faça estes <strong>dois passos na ordem</strong> usando a mesma conta Google do seu Android:</p>
+          <div class="beta-next-step">
+            <strong>PASSO 2 · Entre no Google Groups</strong>
+            <p>Abra o grupo GOAT Cam Testadores e clique em <strong>Participar do grupo</strong>. Depois volte a esta página.</p>
+            <a class="beta-next-link" href="https://groups.google.com/g/goat-cam-testadores" target="_blank" rel="noopener noreferrer">Entrar no grupo de testadores</a>
+          </div>
+          <div class="beta-next-step">
+            <strong>PASSO 3 · Aceite o teste na Google Play</strong>
+            <p>Após entrar no grupo, abra o teste oficial do GOAT Cam, aceite participar e instale o aplicativo pela Play Store.</p>
+            <a class="beta-next-link secondary" href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">Aceitar teste e instalar GOAT Cam</a>
+          </div>
+          <p class="beta-small">Importante: o formulário sozinho não conta como inscrição oficial na Google Play. Se o aplicativo não aparecer, confirme se sua conta Google já entrou no grupo e tente novamente após alguns minutos.</p>
+          <button type="button" class="beta-restart" id="betaRestart">Cadastrar outro e-mail</button>
+        </div>
+        <p class="beta-small beta-pre-note" id="betaPreNote">Participação gratuita, também para quem não comprou o Studio. Não é preciso aguardar inclusão manual na lista de e-mails da Play Console, pois a faixa usa o Google Groups.</p>
       </div>
     </section>
 
     <section class="beta-faq" aria-label="Como funciona o teste">
-      <h2>Como será o acesso ao aplicativo?</h2>
-      <div class="beta-steps">
-        <div class="beta-step"><strong>1. Solicite participação</strong><p>Registre seu e-mail Google no formulário. Isso não inclui automaticamente sua conta no teste fechado.</p></div>
-        <div class="beta-step"><strong>2. Entre no Google Groups</strong><p>Abra o link do grupo abaixo e clique em Participar do grupo, usando a mesma conta Google do celular. O grupo permite entrada voluntária.</p></div>
-        <div class="beta-step"><strong>3. Aceite o teste no Google Play</strong><p>Depois que estiver no grupo, abra o link oficial abaixo, confirme a participação e instale o GOAT Cam pelo Google Play.</p></div>
-      </div>
-      <div class="beta-official" aria-labelledby="beta-play-title">
-        <h3 id="beta-play-title">Participe e instale — dois passos oficiais</h3>
-        <p>Depois de registrar seu interesse no formulário, <strong>entre no Google Groups</strong> com a mesma conta Google do Android. Em seguida, aceite o teste na Play Store. Não precisa enviar pedido de convite manual.</p>
-        <div class="beta-actions">
-          <a href="https://groups.google.com/g/goat-cam-testadores" target="_blank" rel="noopener noreferrer">1. Participar do Google Groups</a>
-          <a class="secondary" href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">2. Aceitar teste na Google Play</a>
-        </div>
-        <small>O link da Google Play não adiciona sua conta ao grupo. Se o Google mostrar que o app não está disponível, confira a associação ao grupo, a conta Google ativa e tente novamente após alguns minutos.</small>
-      </div>
+      <h2>Dúvidas frequentes</h2>
       <details><summary>Preencher o formulário já me transforma em testador?</summary><p>Não. O cadastro apenas registra seu interesse. Para contar como testador, é necessário entrar no grupo autorizado e aceitar o convite oficial do Google Play usando a mesma conta Google.</p></details>
       <details><summary>O aplicativo já está disponível para todos na Google Play?</summary><p>Não. O GOAT Cam ainda está em teste fechado. Somente contas autorizadas que aceitem o convite podem instalar a versão de testes pelo Google Play.</p></details>
       <details><summary>Preciso comprar o GOAT PRO Studio para ser testador?</summary><p>Não. Compradores podem participar como benefício adicional, mas também aceitamos voluntários gratuitamente.</p></details>
@@ -160,20 +162,29 @@
       const status=document.getElementById('betaStatus');
       const button=document.getElementById('betaSubmit');
       const next=document.getElementById('betaNext');
+      const card=document.getElementById('betaSignupCard');
+      const title=document.getElementById('betaSignupTitle');
+      const lead=document.getElementById('betaSignupLead');
+      const stage=document.getElementById('betaStageLabel');
+      const preNote=document.getElementById('betaPreNote');
+      const progress=document.getElementById('betaProgress');
+      const restart=document.getElementById('betaRestart');
       const endpoint='https://azlsdxckgvlkigttkkbr.supabase.co/functions/v1/goat-cam-beta-signup';
       form.addEventListener('submit',async function(event){
         event.preventDefault();
         if(!form.reportValidity()) return;
         const email=document.getElementById('betaEmail').value.trim().toLowerCase();
-        if(!email){status.textContent='Informe o e-mail da conta Google.';status.dataset.status='error';return;}
+        if(!email){status.hidden=false;status.textContent='Informe o e-mail da conta Google.';status.dataset.status='error';return;}
         button.disabled=true;
+        button.textContent='Registrando inscrição...';
+        status.hidden=false;
         status.dataset.status='';
-        status.textContent='Registrando seu interesse...';
+        status.textContent='Enviando seu cadastro...';
         next.hidden=true;
         try{
           const radio=form.querySelector('input[name="applicant_type"]:checked');
           const payload={
-            email:email, applicant_type:radio?radio.value:'volunteer',
+            email:email,applicant_type:radio?radio.value:'volunteer',
             consent:document.getElementById('betaConsent').checked,
             company_site:document.getElementById('companySite').value
           };
@@ -183,14 +194,38 @@
           });
           const data=await res.json();
           if(!res.ok||!data.ok) throw new Error(data.message||'Não foi possível enviar sua inscrição.');
-          status.textContent='Cadastro recebido! Siga os dois links abaixo para entrar no grupo e aceitar o teste fechado na Play Store.';
-          status.dataset.status='ok';
+          form.hidden=true;
+          preNote.hidden=true;
+          stage.textContent='CADASTRO RECEBIDO · PASSOS 2 E 3';
+          title.textContent='Continue para instalar o GOAT Cam';
+          lead.textContent='Os links oficiais agora estão disponíveis aqui mesmo. Siga a ordem indicada abaixo.';
+          progress.children[0].className='done';
+          progress.children[1].className='active';
+          status.hidden=true;
           next.hidden=false;
           form.reset();
+          card.scrollIntoView({behavior:'smooth',block:'start'});
         }catch(err){
           status.textContent=err instanceof Error?err.message:'Falha de conexão. Tente novamente.';
           status.dataset.status='error';
-        }finally{button.disabled=false;}
+        }finally{
+          button.disabled=false;
+          button.textContent='Continuar para instalar o GOAT Cam';
+        }
+      });
+      restart.addEventListener('click',function(){
+        next.hidden=true;
+        form.hidden=false;
+        preNote.hidden=false;
+        status.hidden=true;
+        stage.textContent='COMECE AQUI · PASSO 1 DE 3';
+        title.textContent='Participe do GOAT Cam Beta';
+        lead.innerHTML='Preencha seus dados. Ao clicar em <strong>Continuar</strong>, os botões do Google Groups e da Google Play aparecerão <strong>aqui mesmo</strong>, automaticamente.';
+        progress.children[0].className='active';
+        progress.children[1].className='';
+        form.reset();
+        card.scrollIntoView({behavior:'smooth',block:'start'});
+        document.getElementById('betaEmail').focus({preventScroll:true});
       });
     })();
   </script>

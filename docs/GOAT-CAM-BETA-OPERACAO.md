@@ -11,11 +11,11 @@
 ## Como concluir a integração com o teste fechado
 1. Abrir a Google Play Console > app `com.goatpro.ip` > Testar e lançar > Teste fechado > Gerenciar faixa > Testadores.
 2. Conferir se já utiliza lista de e-mails ou Google Groups. Para escala, usar um Google Group como lista autorizada e definir regras de ingresso apropriadas.
-3. Copiar o **link de adesão/opt-in** gerado pela Play Console, não confundir com o URL de administração da Play Console.
+3. **Concluído:** link de adesão/opt-in oficial recebido do proprietário e integrado ao site e e-mail do cadastro: https://play.google.com/apps/testing/com.goatpro.ip . Esse link não autoriza usuário sem associação ao Google Group.
 4. Para lista de e-mails: acrescentar os cadastrados à lista em Testadores, salvar as mudanças, enviar aos usuários o link oficial para aceitar a participação e instalar pelo Google Play.
 5. Para Google Groups: o interessado ingressa primeiro no grupo, e depois aceita o teste no link da Play; somente membros autorizados podem instalar.
 6. Monitorar o número de **testadores inscritos no Google Play**; o total de inscrições no site NÃO é o número de testadores reconhecidos pelo Google.
-7. Quando estiver funcionando, atualizar a página do beta com o link oficial e instruções precisas. Não disponibilizar diretamente sem verificar elegibilidade.
+7. **Concluído:** página atualizada com link oficial para membros do grupo. **Pendente:** confirmar se visitantes conseguem ingressar no Google Group, configurações de visibilidade, moderação e link oficial de entrada. Não confundir link de inscrição no site com opt-in válido na Play Console.
 8. Testadores devem participar do teste fechado por pelo menos 14 dias consecutivos com 12 participantes antes de solicitar acesso à produção, conforme requisito da conta.
 
 ## Consultar inscrições (somente administrador)

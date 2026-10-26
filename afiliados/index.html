@@ -12,7 +12,8 @@
   <style>
     /* GOAT SALES — pagina de afiliados isolada em branch de rascunho.
        Não habilitar convites nem remover noindex sem aprovação Kiwify. */
-    .affiliate-page { overflow: hidden; }
+    /* Nunca bloquear a rolagem do documento no celular. clip evita transbordamento horizontal sem travar o eixo vertical. */
+    .affiliate-page { overflow-x: clip; }
     .affiliate-page .topbar { padding-inline: max(22px,calc((100vw - 1220px)/2)); }
     .affiliate-page .topbar nav { gap: 22px; }
     .affiliate-page .topbar .nav-cta { color:#f3d58e; }
@@ -52,7 +53,7 @@
       border-radius:14px;padding:14px 17px;box-shadow:0 18px 35px rgba(0,0,0,.32);}
     .affiliate-mini-tag strong {display:block;color:#f4d084;font-size:28px;line-height:1.15;}
     .affiliate-mini-tag span {font-size:12px;color:#bccbde;}
-    .affiliate-section {padding:75px 0;}
+    .affiliate-section {padding:75px 0;scroll-margin-top:84px;}
     .affiliate-heading {max-width:730px;margin:0 auto 35px;text-align:center;}
     .affiliate-heading small {display:block;color:#e2b963;font-weight:850;letter-spacing:2px;margin-bottom:9px;}
     .affiliate-heading h2 {font-size:clamp(30px,4vw,49px);line-height:1.13;letter-spacing:-1.4px;margin:0 0 13px;}
@@ -180,7 +181,7 @@
           </figure>
           <p class="affiliate-subhead">Divulgue o GOAT PRO STUDIO, software de astronomia para Windows, e receba comissão pelas vendas atribuídas ao seu link de afiliado.</p>
           <div class="affiliate-actions">
-            <a class="btn btn-primary" href="#como-funciona">Conheça o programa</a>
+            <a class="btn btn-primary" href="#comissao">Conheça o programa</a>
             <a class="btn btn-ghost" href="/">Veja o software</a>
           </div>
           <p class="affiliate-hero-notice">Inscrições ainda não abertas. Aguardamos confirmação formal da elegibilidade do produto pela Kiwify.</p>

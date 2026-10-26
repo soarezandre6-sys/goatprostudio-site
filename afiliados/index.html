@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070a10">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="description" content="Conheça o futuro programa de afiliados GOAT PRO STUDIO: software de astronomia para Windows, comissão por venda aprovada e divulgação com link rastreável.">
+  <title>Seja um Afiliado | GOAT PRO STUDIO</title>
+  <link rel="icon" href="../assets/goatpro-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css?v=20261025-visuais-2">
+  <style>
+    /* GOAT SALES — pagina de afiliados isolada em branch de rascunho.
+       Não habilitar convites nem remover noindex sem aprovação Kiwify. */
+    .affiliate-page { overflow: hidden; }
+    .affiliate-page .topbar { padding-inline: max(22px,calc((100vw - 1220px)/2)); }
+    .affiliate-page .topbar nav { gap: 22px; }
+    .affiliate-page .topbar .nav-cta { color:#f3d58e; }
+    .affiliate-wrap { width:min(1220px,calc(100% - 48px)); margin-inline:auto; }
+    .affiliate-hero {
+      position:relative; isolation:isolate;
+      padding: clamp(68px,7.5vw,112px) 0 78px;
+      background:radial-gradient(ellipse at 72% 15%,rgba(66,92,213,.23),transparent 48%),
+                 radial-gradient(ellipse at 10% 70%,rgba(0,153,255,.09),transparent 42%);
+    }
+    .affiliate-hero::after {
+      content:"";position:absolute;inset:0;z-index:-1;opacity:.25;pointer-events:none;
+      background-image:radial-gradient(circle,#a4c6ff 1px,transparent 1.4px);
+      background-size:70px 70px;mask-image:linear-gradient(to bottom,black,transparent 80%);
+    }
+    .affiliate-hero-grid { display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:48px;align-items:center; }
+    .affiliate-kicker {display:inline-flex;align-items:center;gap:9px;padding:8px 13px;
+      border:1px solid rgba(230,184,94,.25);border-radius:30px;color:#f5d58c;background:rgba(230,184,94,.07);
+      font-size:12px;font-weight:850;letter-spacing:1.1px;text-transform:uppercase;}
+    .affiliate-kicker::before {content:"";display:block;width:7px;height:7px;border-radius:50%;background:#e6b85e;box-shadow:0 0 14px #e6b85e;}
+    .affiliate-hero h1 { margin:22px 0 22px;font-size:clamp(43px,5.3vw,74px);line-height:1.04;letter-spacing:-2.5px;max-width:660px; }
+    .affiliate-hero h1 em {font-style:normal;color:#eec77c;}
+    .affiliate-subhead {font-size:clamp(16px,1.65vw,19px);line-height:1.6;color:#bbc9dc;max-width:610px;margin:0 0 27px;}
+    .affiliate-actions {display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+    .affiliate-actions .btn {min-height:53px; }
+    .affiliate-actions .btn-primary {background:linear-gradient(140deg,#f6d28e,#bd8d38);color:#191408;box-shadow:0 14px 34px rgba(235,179,79,.16);}
+    .affiliate-hero-notice {margin:16px 0 0;line-height:1.55;font-size:13px;color:#9fb2cc;}
+    .affiliate-proof {display:flex;flex-wrap:wrap;gap:11px;margin-top:28px;}
+    .affiliate-proof span {border:1px solid rgba(137,180,242,.19);border-radius:99px;background:rgba(28,53,94,.24);color:#d2dff0;padding:7px 13px;font-size:12px;font-weight:650;}
+    .affiliate-visual {position:relative;}
+    .affiliate-visual-figure {overflow:hidden;border:1px solid rgba(230,184,94,.23);padding:10px;border-radius:25px;
+      background:linear-gradient(155deg,rgba(30,42,68,.8),rgba(7,11,20,.96));box-shadow:0 40px 95px rgba(0,0,0,.38);}
+    .affiliate-visual-figure img {aspect-ratio:16/10;width:100%;height:auto;object-fit:cover;border-radius:16px;}
+    .affiliate-visual-figure figcaption {padding:12px 11px 5px;color:#9eacc1;font-size:12px;}
+    .affiliate-mini-tag {position:absolute;right:-15px;bottom:27px;background:#121b29;border:1px solid #4d6286;
+      border-radius:14px;padding:14px 17px;box-shadow:0 18px 35px rgba(0,0,0,.32);}
+    .affiliate-mini-tag strong {display:block;color:#f4d084;font-size:28px;line-height:1.15;}
+    .affiliate-mini-tag span {font-size:12px;color:#bccbde;}
+    .affiliate-section {padding:75px 0;}
+    .affiliate-heading {max-width:730px;margin:0 auto 35px;text-align:center;}
+    .affiliate-heading small {display:block;color:#e2b963;font-weight:850;letter-spacing:2px;margin-bottom:9px;}
+    .affiliate-heading h2 {font-size:clamp(30px,4vw,49px);line-height:1.13;letter-spacing:-1.4px;margin:0 0 13px;}
+    .affiliate-heading p {font-size:16px;color:#b1c1d6;margin:0;}
+    .affiliate-stats {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:0 0 25px;}
+    .affiliate-stat {border:1px solid rgba(230,184,94,.2);padding:25px;background:linear-gradient(145deg,#151e2c,#0b101a);border-radius:18px;}
+    .affiliate-stat small {font-size:12px;color:#aebbd0;font-weight:700;}
+    .affiliate-stat strong {display:block;color:#f5cf84;font-size:clamp(28px,3.3vw,43px);letter-spacing:-1px;line-height:1.23;margin:5px 0;}
+    .affiliate-stat span {font-size:13px;color:#a5b3c9;}
+    .affiliate-fineprint {font-size:12px;color:#9baac0;line-height:1.65;max-width:970px;margin:8px auto 0;}
+    .affiliate-steps {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+    .affiliate-step {background:linear-gradient(145deg,#111c2e,#0a101a);border:1px solid rgba(103,162,243,.19);
+      border-radius:18px;padding:29px 26px;min-height:210px;}
+    .affiliate-step-index {font-size:13px;color:#e6b85e;font-weight:900;letter-spacing:2px;}
+    .affiliate-step h3 {margin:22px 0 10px;font-size:22px;line-height:1.22;}
+    .affiliate-step p {margin:0;color:#aebcd0;font-size:15px;line-height:1.6;}
+    .affiliate-gallery {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+    .affiliate-gallery article {background:#0d1522;border:1px solid rgba(129,178,243,.15);border-radius:17px;overflow:hidden;}
+    .affiliate-gallery img {width:100%;aspect-ratio:16/10;object-fit:cover;}
+    .affiliate-gallery h3 {font-size:17px;line-height:1.3;margin:14px 17px 6px;}
+    .affiliate-gallery p {font-size:13px;color:#a6b6cc;margin:0 17px 18px;line-height:1.55;}
+    .affiliate-status {border:1px solid rgba(230,184,94,.27);border-radius:25px;background:
+      radial-gradient(circle at 85% 12%,rgba(137,94,231,.14),transparent 44%),linear-gradient(145deg,#131b29,#0b1018);
+      padding:clamp(28px,5vw,56px);text-align:center;}
+    .affiliate-status h2 {margin:0 0 14px;font-size:clamp(29px,3.7vw,45px);letter-spacing:-1px;line-height:1.16;}
+    .affiliate-status p {color:#afbed3;max-width:720px;margin:0 auto 23px;line-height:1.65;}
+    .affiliate-pending-button {display:inline-flex;align-items:center;justify-content:center;min-height:53px;
+      border:1px solid rgba(207,177,109,.29);border-radius:12px;background:rgba(230,184,94,.11);
+      color:#efd393;padding:12px 22px;font-weight:800;cursor:not-allowed;}
+    .affiliate-help {font-size:13px;margin-top:17px!important;}
+    .affiliate-faq {width:min(830px,100%);margin:0 auto;display:grid;gap:12px;}
+    .affiliate-faq details {border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 20px;background:rgba(14,23,37,.87);}
+    .affiliate-faq summary {font-weight:800;cursor:pointer;}
+    .affiliate-faq p {font-size:14px;line-height:1.6;color:#afbdd0;margin:12px 0 0;}
+    .affiliate-page footer {margin-top:70px;}
+    @media(max-width:1000px) {
+      .affiliate-hero-grid {grid-template-columns:1fr;gap:33px;}
+      .affiliate-visual {max-width:760px;}
+      .affiliate-steps {gap:12px;}
+    }
+    @media(max-width:760px){
+      .affiliate-wrap {width:min(100% - 32px,1220px);}
+      .affiliate-hero {padding:50px 0 35px;}
+      .affiliate-hero h1 {font-size:clamp(37px,9.4vw,54px);letter-spacing:-1.4px;}
+      .affiliate-mini-tag {right:6px;bottom:21px;padding:11px 13px;}
+      .affiliate-mini-tag strong {font-size:24px;}
+      .affiliate-section {padding:54px 0;}
+      .affiliate-stats,.affiliate-steps,.affiliate-gallery {grid-template-columns:1fr;}
+      .affiliate-stat {padding:20px;}
+      .affiliate-step {min-height:auto;}
+      .affiliate-hero .affiliate-actions .btn {width:100%;}
+      .affiliate-page .topbar nav a:not(.nav-cta) {display:none;}
+      .affiliate-page .topbar nav .nav-cta {font-size:12px;padding:8px 10px;}
+      .affiliate-status {border-radius:19px;}
+    }
+  </style>
+</head>
+<body class="affiliate-page">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="GOAT PRO Studio — página inicial">
+      <img src="../assets/goatpro-icon.svg" alt=""><span><strong>GOAT PRO</strong> Studio</span>
+    </a>
+    <nav aria-label="Navegação">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#comissao">Comissão</a>
+      <a class="nav-cta" href="/">Ver o GOAT</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="affiliate-hero" aria-labelledby="affiliate-title">
+      <div class="affiliate-wrap affiliate-hero-grid">
+        <div>
+          <span class="affiliate-kicker">GOAT SALES • Programa de afiliados</span>
+          <h1 id="affiliate-title">Venda tecnologia para observar o céu. <em>Ganhe por resultado.</em></h1>
+          <p class="affiliate-subhead">Divulgue o GOAT PRO STUDIO, software de astronomia para Windows, e receba comissão pelas vendas atribuídas ao seu link de afiliado.</p>
+          <div class="affiliate-actions">
+            <a class="btn btn-primary" href="#como-funciona">Conheça o programa</a>
+            <a class="btn btn-ghost" href="/">Veja o software</a>
+          </div>
+          <p class="affiliate-hero-notice">Inscrições ainda não abertas. Aguardamos confirmação formal da elegibilidade do produto pela Kiwify.</p>
+          <div class="affiliate-proof" aria-label="Características do programa">
+            <span>Comissão inicial de 10%</span>
+            <span>Aprovação manual</span>
+            <span>Links individuais da Kiwify</span>
+          </div>
+        </div>
+        <div class="affiliate-visual">
+          <figure class="affiliate-visual-figure">
+            <img src="../assets/feature-live-stack.svg?v=orion-20261025" alt="Ilustração do Live Stacking com imagens combinadas formando a Nebulosa de Órion" width="1600" height="900">
+            <figcaption>Um dos recursos do GOAT PRO STUDIO. Imagem ilustrativa, não captura do programa.</figcaption>
+          </figure>
+          <div class="affiliate-mini-tag" aria-label="Comissão inicial de dez por cento"><strong>10%</strong><span>por venda atribuída*</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="affiliate-section" id="comissao" aria-labelledby="comissao-title">
+      <div class="affiliate-wrap">
+        <div class="affiliate-heading">
+          <small>COMISSÃO CLARA</small>
+          <h2 id="comissao-title">Seu trabalho de divulgação pode virar comissão.</h2>
+          <p>Uma licença custa R$ 397. A comissão inicial é de 10%, calculada sobre o valor após as taxas padrão da Kiwify.</p>
+        </div>
+        <div class="affiliate-stats">
+          <div class="affiliate-stat"><small>Exemplo: 1 venda</small><strong>R$ 35,88</strong><span>Comissão aproximada</span></div>
+          <div class="affiliate-stat"><small>Exemplo: 10 vendas</small><strong>R$ 358,80</strong><span>Comissão aproximada</span></div>
+          <div class="affiliate-stat"><small>Exemplo: 30 vendas</small><strong>R$ 1.076,40</strong><span>Comissão aproximada</span></div>
+        </div>
+        <p class="affiliate-fineprint">* Simulações ilustrativas, não promessa de ganhos. Com preço de R$ 397, taxas de R$ 38,18 e comissão de 10% sobre R$ 358,82, a estimativa por venda aprovada é R$ 35,88. Valores, elegibilidade, atribuição, prazos e pagamento seguem as condições efetivas da Kiwify e podem mudar.</p>
+      </div>
+    </section>
+
+    <section class="affiliate-section" id="como-funciona" aria-labelledby="como-title">
+      <div class="affiliate-wrap">
+        <div class="affiliate-heading">
+          <small>SIMPLES DE ENTENDER</small>
+          <h2 id="como-title">Como funciona a parceria?</h2>
+          <p>Você divulga. A Kiwify rastreia o link. As vendas aprovadas geram comissão conforme as regras da plataforma.</p>
+        </div>
+        <div class="affiliate-steps">
+          <article class="affiliate-step"><span class="affiliate-step-index">PASSO 01</span><h3>Solicite sua afiliação</h3><p>Quando as inscrições abrirem, você será direcionado ao convite oficial da Kiwify. Analisaremos cada solicitação.</p></article>
+          <article class="affiliate-step"><span class="affiliate-step-index">PASSO 02</span><h3>Divulgue seu link</h3><p>Após aprovação, utilize seu link individual para apresentar o GOAT PRO STUDIO ao público interessado em astronomia e tecnologia.</p></article>
+          <article class="affiliate-step"><span class="affiliate-step-index">PASSO 03</span><h3>Receba por venda atribuída</h3><p>Quando uma compra for aprovada e atribuída ao seu link, a comissão será processada segundo as regras da Kiwify.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="affiliate-section" aria-labelledby="divulgacao-title">
+      <div class="affiliate-wrap">
+        <div class="affiliate-heading">
+          <small>O QUE VOCÊ VAI DIVULGAR</small>
+          <h2 id="divulgacao-title">Um programa. Várias razões para despertar interesse.</h2>
+          <p>Os principais diferenciais do software já têm imagens de apresentação. Um kit publicitário específico para afiliados está em preparação.</p>
+        </div>
+        <div class="affiliate-gallery">
+          <article><img loading="lazy" src="../assets/feature-live-stack.svg?v=orion-20261025" alt="Live Stacking astronômico, imagem ilustrativa" width="1600" height="900"><h3>Live Stacking</h3><p>Empilhamento de imagens para observação de objetos de baixa luminosidade.</p></article>
+          <article><img loading="lazy" src="../assets/feature-meteor-detection.svg?v=lua-20261025-1" alt="Detecção de meteoro, imagem ilustrativa" width="1600" height="900"><h3>Detecção de meteoros</h3><p>Ferramentas de monitoramento e registro de eventos astronômicos.</p></article>
+          <article><img loading="lazy" src="../assets/feature-live-stream.svg?v=transmissao-20261025-2" alt="Transmissão ao vivo, imagem ilustrativa" width="1600" height="900"><h3>Live e gravação</h3><p>Captura e transmissão em um único ambiente para Windows.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="affiliate-section" id="inscricao" aria-labelledby="inscricao-title">
+      <div class="affiliate-wrap">
+        <div class="affiliate-status">
+          <span class="affiliate-kicker">INSCRIÇÕES EM PREPARAÇÃO</span>
+          <h2 id="inscricao-title">Em breve você poderá solicitar sua afiliação.</h2>
+          <p>O programa já está configurado para análise manual, mas a divulgação pública e os convites aguardarão a confirmação expressa da Kiwify sobre a elegibilidade da licença de software.</p>
+          <!-- Após confirmação oficial e fornecimento do link real de convite, substituir
+               este elemento informativo por <a href="URL_OFICIAL_KIWIFY">Quero ser afiliado</a>.
+               NÃO criar um formulário paralelo nem publicar links truncados de prints. -->
+          <span class="affiliate-pending-button" role="status" aria-live="polite">Aguardando abertura das inscrições</span>
+          <p class="affiliate-help">Por enquanto, conheça o <a href="/" style="color:#f2cb81;text-decoration:underline;text-underline-offset:3px">GOAT PRO STUDIO</a> e seus recursos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="affiliate-section" aria-labelledby="faq-title">
+      <div class="affiliate-wrap">
+        <div class="affiliate-heading"><small>DÚVIDAS FREQUENTES</small><h2 id="faq-title">Antes de começar</h2></div>
+        <div class="affiliate-faq">
+          <details><summary>Preciso criar uma conta na Kiwify?</summary><p>O cadastro e a solicitação de afiliação serão realizados pelo convite oficial da Kiwify quando o programa for aberto.</p></details>
+          <details><summary>Qual é a comissão inicial?</summary><p>A comissão configurada é de 10% sobre o valor após as taxas da Kiwify. A simulação atual para a licença de R$ 397 resulta em aproximadamente R$ 35,88 por venda aprovada.</p></details>
+          <details><summary>Minha afiliação é aprovada automaticamente?</summary><p>Não. As solicitações serão analisadas manualmente pelo produtor.</p></details>
+          <details><summary>Quais recursos o GOAT PRO STUDIO oferece?</summary><p>Entre os destaques estão Live Stacking, ferramentas para detecção de meteoros, gravação, fotografia e transmissão com câmeras compatíveis. Verifique a compatibilidade no <a href="/" style="color:#f2cb81">site oficial</a>.</p></details>
+          <details><summary>Quando o cadastro será liberado?</summary><p>Após a confirmação da Kiwify sobre a elegibilidade da licença de software e a publicação das regras finais de participação.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <a class="brand footer-brand" href="/"><img src="../assets/goatpro-icon.svg" alt=""><span><strong>GOAT PRO</strong> Studio</span></a>
+    <p>Observe • Empilhe • Detecte • Transmita</p>
+    <p class="copyright">© <span id="year">2026</span> GOAT PRO Studio. Todos os direitos reservados.</p>
+  </footer>
+  <script>document.getElementById('year').textContent=String(new Date().getFullYear());</script>
+</body>
+</html>

@@ -19,6 +19,45 @@
   <meta property="og:type" content="website" />
   <link rel="icon" href="assets/goatpro-icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css?v=20261025-visuais-2" />
+  <style>
+    /* GOAT SALES — prévia do programa de afiliados, sem inscrição pública. */
+    .affiliate-preview-nav {
+      color: #efd18a;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .affiliate-preview-nav:hover { color:#fff2cb; }
+    .affiliate-preview-nav small {
+      display: inline-block; margin-left: 5px; padding: 2px 5px;
+      border: 1px solid rgba(230,184,94,.28); border-radius: 5px;
+      color:#cebb92;font-size:10px;font-weight:650;letter-spacing:.1px;
+      vertical-align:middle;
+    }
+    .affiliate-preview-ribbon { display:none; }
+    .affiliate-footer-link { color:#e6b85e; font-weight:750; }
+    .affiliate-footer-link:hover { text-decoration:underline;text-underline-offset:4px; }
+    @media (max-width: 1170px) {
+      .topbar nav .affiliate-preview-nav { display:none; }
+      .affiliate-preview-ribbon {
+        display:flex;align-items:center;justify-content:center;
+        gap:10px;flex-wrap:wrap;
+        min-height:40px; padding:8px 14px;
+        border-bottom:1px solid rgba(230,184,94,.2);
+        background:rgba(26,26,33,.95);
+        color:#f2cf89; font-size:13px;font-weight:750;text-align:center;
+      }
+      .affiliate-preview-ribbon span {
+        border:1px solid rgba(230,184,94,.29);
+        border-radius:999px;padding:2px 8px;
+        font-size:11px;color:#d9d0bc;
+      }
+      .affiliate-preview-ribbon:hover { background:#262333; }
+    }
+    @media (max-width: 420px) {
+      .affiliate-preview-ribbon {gap:7px;font-size:12px;min-height:38px;padding:7px 8px;}
+      .affiliate-preview-ribbon span {font-size:10px;padding:2px 6px;}
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -31,9 +70,13 @@
       <a href="#goat-cam">GOAT Cam</a>
       <a href="#visual">Visual</a>
       <a href="#requisitos">Requisitos</a>
+      <a class="affiliate-preview-nav" href="/afiliados/" aria-label="Afiliados, inscrições em breve">Afiliados <small>Em breve</small></a>
       <a class="nav-cta" href="#comprar">Comprar</a>
     </nav>
   </header>
+  <a class="affiliate-preview-ribbon" href="/afiliados/" aria-label="Conheça o programa de afiliados do GOAT PRO STUDIO, inscrições em breve">
+    Afiliados GOAT PRO STUDIO <span>Em breve</span>
+  </a>
 
   <main>
     <section class="hero" id="inicio">
@@ -227,6 +270,7 @@
   <footer>
     <a class="brand footer-brand" href="#inicio"><img src="assets/goatpro-icon.svg" alt="" /><span><strong>GOAT PRO</strong> Studio</span></a>
     <p>Observe • Empilhe • Detecte • Transmita</p>
+    <p><a class="affiliate-footer-link" href="/afiliados/">Programa de Afiliados — em breve</a></p>
     <p class="copyright">© <span id="year"></span> GOAT PRO Studio. Todos os direitos reservados.</p>
   </footer>
 

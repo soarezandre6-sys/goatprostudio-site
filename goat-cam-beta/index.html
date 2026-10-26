@@ -56,6 +56,12 @@
     .beta-next-link.secondary{background:#203249;color:#f5d48a!important;border:1px solid rgba(230,184,94,.48)}
     .beta-next-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
     .beta-restart{border:0;background:none;text-decoration:underline;color:#d5c08c;cursor:pointer;padding:8px 0;font:inherit;font-size:13px}
+    .beta-optional{margin-top:22px;padding:15px 17px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:#0c1522}
+    .beta-optional summary{cursor:pointer;color:#f2d18b;font-weight:750;font-size:14px}
+    .beta-optional > p{font-size:13px}
+    .beta-next-step{margin:16px 0}
+    .beta-next-link{width:100%}
+    .beta-card p strong{color:#f6e5be}
     .beta-faq{margin-top:34px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px}
     .beta-faq details{margin:8px 0;background:#0d1420;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px 18px}
     .beta-faq summary{font-weight:750;cursor:pointer}
@@ -72,7 +78,7 @@
   </header>
   <main class="beta-shell">
     <section class="beta-intro">
-      <span class="beta-pill">Teste fechado no Google Play • Inscrições abertas</span>
+      <span class="beta-pill">Teste fechado na Google Play • Participe gratuitamente</span>
       <p class="beta-kicker">GOAT CAM PARA ANDROID</p>
       <h1>Seu celular pode fazer parte da sua <em>estação de observação</em>.</h1>
       <p class="beta-lead">Participe gratuitamente do teste do GOAT Cam, aplicativo Android em desenvolvimento para transmitir a câmera do smartphone pela rede local e integrá-la ao GOAT PRO Studio em equipamentos compatíveis.</p>
@@ -92,58 +98,53 @@
       </div>
 
       <div class="beta-card beta-signup-card" id="betaSignupCard">
-        <span class="beta-pill" id="betaStageLabel">COMECE AQUI · PASSO 1 DE 3</span>
-        <h2 id="betaSignupTitle">Participe do GOAT Cam Beta</h2>
-        <p id="betaSignupLead">Preencha seus dados. Ao clicar em <strong>Continuar</strong>, os botões do Google Groups e da Google Play aparecerão <strong>aqui mesmo</strong>, automaticamente.</p>
-        <div class="beta-progress" id="betaProgress" aria-label="Etapas para instalar o teste">
-          <span class="active">1. Cadastro</span><span>2. Grupo</span><span>3. Google Play</span>
+        <span class="beta-pill">ACESSO GRATUITO • TESTE FECHADO</span>
+        <h2>Teste o GOAT Cam no seu celular</h2>
+        <p>Não precisa preencher formulário para começar. São <strong>apenas duas etapas oficiais</strong> para participar do teste.</p>
+        <div class="beta-next-step">
+          <strong>1. Entre no grupo de testadores</strong>
+          <p>Abra o Google Groups e toque em <strong>Junte-se ao grupo</strong>. Confira se está usando a mesma conta Google configurada no Android.</p>
+          <a class="beta-next-link" href="https://groups.google.com/g/goat-cam-testadores" target="_blank" rel="noopener noreferrer">1 — Juntar-se ao grupo GOAT Cam</a>
         </div>
-        <form id="betaSignup" novalidate>
-          <div class="beta-field">
-            <label for="betaEmail">E-mail da conta Google no Android</label>
-            <input class="beta-input" type="email" id="betaEmail" name="email" maxlength="254" autocomplete="email" required placeholder="seuemail@gmail.com">
-          </div>
-          <div class="beta-field">
-            <span class="beta-legend">Você já comprou o GOAT PRO Studio?</span>
-            <div class="beta-radio">
-              <label><input type="radio" name="applicant_type" value="buyer"> Sim, sou comprador</label>
-              <label><input type="radio" name="applicant_type" value="volunteer" checked> Ainda não, sou voluntário</label>
+        <div class="beta-next-step">
+          <strong>2. Aceite o teste e instale o aplicativo</strong>
+          <p>Depois de entrar no grupo, use o link do Google Play para aceitar o teste e instalar o GOAT Cam.</p>
+          <a class="beta-next-link secondary" href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">2 — Aceitar teste na Google Play</a>
+        </div>
+        <p class="beta-small"><strong>Atenção:</strong> antes de entrar no grupo, o Google pode mostrar “Você não tem permissão para acessar este conteúdo”. Se aparecer o botão “Junte-se ao grupo”, toque nele. Se estiver com outra conta Google, troque pelo ícone do perfil.</p>
+        <details class="beta-optional" id="betaOptional">
+          <summary>Opcional: quero receber instruções por e-mail</summary>
+          <p>Você pode deixar seu e-mail para receber orientações sobre o teste. <strong>Isso não é necessário para participar</strong> e não substitui os dois passos acima.</p>
+          <form id="betaSignup" novalidate>
+            <div class="beta-field">
+              <label for="betaEmail">E-mail da conta Google</label>
+              <input class="beta-input" type="email" id="betaEmail" name="email" maxlength="254" autocomplete="email" required placeholder="seuemail@gmail.com">
             </div>
-          </div>
-          <div class="beta-honeypot" aria-hidden="true">
-            <label for="companySite">Site da empresa</label>
-            <input id="companySite" name="company_site" type="text" tabindex="-1" autocomplete="off">
-          </div>
-          <label class="beta-consent" for="betaConsent">
-            <input type="checkbox" id="betaConsent" required>
-            <span>Concordo em receber os e-mails de inscrição, instruções e feedback do teste. Posso solicitar a exclusão do cadastro pelo suporte.</span>
-          </label>
-          <button class="beta-button" id="betaSubmit" type="submit">Continuar para instalar o GOAT Cam</button>
-        </form>
-        <div id="betaStatus" class="beta-status" role="status" aria-live="polite" hidden></div>
-        <div id="betaNext" class="beta-after-signup" hidden>
-          <h3>Agora é só entrar no grupo e instalar!</h3>
-          <p>Seu cadastro no GOAT PRO STUDIO foi recebido. Para participar de verdade do teste fechado, faça estes <strong>dois passos na ordem</strong> usando a mesma conta Google do seu Android:</p>
-          <div class="beta-next-step">
-            <strong>PASSO 2 · Entre no Google Groups</strong>
-            <p>Abra o grupo GOAT Cam Testadores e clique em <strong>Participar do grupo</strong>. Depois volte a esta página.</p>
-            <a class="beta-next-link" href="https://groups.google.com/g/goat-cam-testadores" target="_blank" rel="noopener noreferrer">Entrar no grupo de testadores</a>
-          </div>
-          <div class="beta-next-step">
-            <strong>PASSO 3 · Aceite o teste na Google Play</strong>
-            <p>Após entrar no grupo, abra o teste oficial do GOAT Cam, aceite participar e instale o aplicativo pela Play Store.</p>
-            <a class="beta-next-link secondary" href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">Aceitar teste e instalar GOAT Cam</a>
-          </div>
-          <p class="beta-small">Importante: o formulário sozinho não conta como inscrição oficial na Google Play. Se o aplicativo não aparecer, confirme se sua conta Google já entrou no grupo e tente novamente após alguns minutos.</p>
-          <button type="button" class="beta-restart" id="betaRestart">Cadastrar outro e-mail</button>
-        </div>
-        <p class="beta-small beta-pre-note" id="betaPreNote">Participação gratuita, também para quem não comprou o Studio. Não é preciso aguardar inclusão manual na lista de e-mails da Play Console, pois a faixa usa o Google Groups.</p>
+            <div class="beta-field">
+              <span class="beta-legend">Você já comprou o GOAT PRO Studio?</span>
+              <div class="beta-radio">
+                <label><input type="radio" name="applicant_type" value="buyer"> Sim, sou comprador</label>
+                <label><input type="radio" name="applicant_type" value="volunteer" checked> Ainda não, sou voluntário</label>
+              </div>
+            </div>
+            <div class="beta-honeypot" aria-hidden="true">
+              <label for="companySite">Site da empresa</label>
+              <input id="companySite" name="company_site" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <label class="beta-consent" for="betaConsent">
+              <input type="checkbox" id="betaConsent" required>
+              <span>Concordo em receber orientações e e-mails relacionados ao GOAT Cam Beta. Posso solicitar a exclusão do cadastro pelo suporte.</span>
+            </label>
+            <button class="beta-button" id="betaSubmit" type="submit">Receber orientações por e-mail</button>
+          </form>
+          <div id="betaStatus" class="beta-status" role="status" aria-live="polite" hidden></div>
+        </details>
       </div>
     </section>
 
     <section class="beta-faq" aria-label="Como funciona o teste">
       <h2>Dúvidas frequentes</h2>
-      <details><summary>Preencher o formulário já me transforma em testador?</summary><p>Não. O cadastro apenas registra seu interesse. Para contar como testador, é necessário entrar no grupo autorizado e aceitar o convite oficial do Google Play usando a mesma conta Google.</p></details>
+      <details><summary>Preciso preencher o formulário para baixar o app?</summary><p>Não. Para participar, você precisa entrar no Google Groups e aceitar o teste na Google Play usando a mesma conta Google do seu Android. Deixar o e-mail no site é opcional e serve apenas para receber instruções.</p></details>
       <details><summary>O aplicativo já está disponível para todos na Google Play?</summary><p>Não. O GOAT Cam ainda está em teste fechado. Somente contas autorizadas que aceitem o convite podem instalar a versão de testes pelo Google Play.</p></details>
       <details><summary>Preciso comprar o GOAT PRO Studio para ser testador?</summary><p>Não. Compradores podem participar como benefício adicional, mas também aceitamos voluntários gratuitamente.</p></details>
       <details><summary>Como envio sugestões ou aviso que encontrei um erro?</summary><p>Responda ao e-mail de confirmação do teste ou escreva para <a class="beta-link" href="mailto:suporte@goatprostudio.com.br?subject=Feedback%20GOAT%20Cam%20Beta">suporte@goatprostudio.com.br</a> com o modelo do smartphone, versão do Android, o que aconteceu e, se possível, a resolução utilizada.</p></details>
@@ -161,30 +162,20 @@
       const form=document.getElementById('betaSignup');
       const status=document.getElementById('betaStatus');
       const button=document.getElementById('betaSubmit');
-      const next=document.getElementById('betaNext');
-      const card=document.getElementById('betaSignupCard');
-      const title=document.getElementById('betaSignupTitle');
-      const lead=document.getElementById('betaSignupLead');
-      const stage=document.getElementById('betaStageLabel');
-      const preNote=document.getElementById('betaPreNote');
-      const progress=document.getElementById('betaProgress');
-      const restart=document.getElementById('betaRestart');
       const endpoint='https://azlsdxckgvlkigttkkbr.supabase.co/functions/v1/goat-cam-beta-signup';
       form.addEventListener('submit',async function(event){
         event.preventDefault();
         if(!form.reportValidity()) return;
-        const email=document.getElementById('betaEmail').value.trim().toLowerCase();
-        if(!email){status.hidden=false;status.textContent='Informe o e-mail da conta Google.';status.dataset.status='error';return;}
         button.disabled=true;
-        button.textContent='Registrando inscrição...';
+        button.textContent='Enviando...';
         status.hidden=false;
         status.dataset.status='';
-        status.textContent='Enviando seu cadastro...';
-        next.hidden=true;
+        status.textContent='Registrando seu e-mail...';
         try{
           const radio=form.querySelector('input[name="applicant_type"]:checked');
           const payload={
-            email:email,applicant_type:radio?radio.value:'volunteer',
+            email:document.getElementById('betaEmail').value.trim().toLowerCase(),
+            applicant_type:radio?radio.value:'volunteer',
             consent:document.getElementById('betaConsent').checked,
             company_site:document.getElementById('companySite').value
           };
@@ -193,39 +184,17 @@
             body:JSON.stringify(payload),mode:'cors',cache:'no-store'
           });
           const data=await res.json();
-          if(!res.ok||!data.ok) throw new Error(data.message||'Não foi possível enviar sua inscrição.');
-          form.hidden=true;
-          preNote.hidden=true;
-          stage.textContent='CADASTRO RECEBIDO · PASSOS 2 E 3';
-          title.textContent='Continue para instalar o GOAT Cam';
-          lead.textContent='Os links oficiais agora estão disponíveis aqui mesmo. Siga a ordem indicada abaixo.';
-          progress.children[0].className='done';
-          progress.children[1].className='active';
-          status.hidden=true;
-          next.hidden=false;
+          if(!res.ok||!data.ok) throw new Error(data.message||'Não foi possível registrar seu e-mail.');
+          status.textContent='Cadastro recebido! As instruções serão enviadas por e-mail. Para participar do teste, utilize os dois botões acima.';
+          status.dataset.status='ok';
           form.reset();
-          card.scrollIntoView({behavior:'smooth',block:'start'});
         }catch(err){
           status.textContent=err instanceof Error?err.message:'Falha de conexão. Tente novamente.';
           status.dataset.status='error';
         }finally{
           button.disabled=false;
-          button.textContent='Continuar para instalar o GOAT Cam';
+          button.textContent='Receber orientações por e-mail';
         }
-      });
-      restart.addEventListener('click',function(){
-        next.hidden=true;
-        form.hidden=false;
-        preNote.hidden=false;
-        status.hidden=true;
-        stage.textContent='COMECE AQUI · PASSO 1 DE 3';
-        title.textContent='Participe do GOAT Cam Beta';
-        lead.innerHTML='Preencha seus dados. Ao clicar em <strong>Continuar</strong>, os botões do Google Groups e da Google Play aparecerão <strong>aqui mesmo</strong>, automaticamente.';
-        progress.children[0].className='active';
-        progress.children[1].className='';
-        form.reset();
-        card.scrollIntoView({behavior:'smooth',block:'start'});
-        document.getElementById('betaEmail').focus({preventScroll:true});
       });
     })();
   </script>

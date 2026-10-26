@@ -42,6 +42,11 @@
     .beta-step{background:#0c1420;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:19px}
     .beta-step strong{display:block;color:#f4d58f;margin-bottom:7px}
     .beta-step p{margin:0;font-size:14px;color:#b2c0d2}
+    .beta-official{border:1px solid rgba(230,184,94,.3);border-radius:16px;padding:20px;background:rgba(230,184,94,.055);margin:20px 0 24px}
+    .beta-official h3{margin:0 0 8px;font-size:20px;color:#f3d997}
+    .beta-official p{margin:0 0 12px;color:#c5d2e0;line-height:1.6}
+    .beta-official a{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:10px;background:#e6b85e;color:#111827;font-weight:800;text-align:center;text-decoration:none}
+    .beta-official small{display:block;color:#aebed1;margin-top:12px;line-height:1.65}
     .beta-faq{margin-top:34px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px}
     .beta-faq details{margin:8px 0;background:#0d1420;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px 18px}
     .beta-faq summary{font-weight:750;cursor:pointer}
@@ -110,10 +115,17 @@
     <section class="beta-faq" aria-label="Como funciona o teste">
       <h2>Como será o acesso ao aplicativo?</h2>
       <div class="beta-steps">
-        <div class="beta-step"><strong>1. Inscrição</strong><p>Envie seu e-mail Google pelo formulário. A inscrição é gratuita e voluntária.</p></div>
-        <div class="beta-step"><strong>2. Convite oficial</strong><p>Incluiremos sua conta na lista autorizada do teste fechado e enviaremos o link oficial de participação.</p></div>
-        <div class="beta-step"><strong>3. Instalação e feedback</strong><p>Abra o link com a mesma conta Google, aceite o teste e instale pela Play Store. Depois, conte como foi.</p></div>
+        <div class="beta-step"><strong>1. Solicite participação</strong><p>Registre seu e-mail Google no formulário. Isso não inclui automaticamente sua conta no teste fechado.</p></div>
+        <div class="beta-step"><strong>2. Entre no Google Groups</strong><p>Você precisa ser membro do grupo de testadores autorizado pela Play Console. Enviaremos as orientações de ingresso. Use a mesma conta Google do celular.</p></div>
+        <div class="beta-step"><strong>3. Aceite o teste no Google Play</strong><p>Depois que estiver no grupo, abra o link oficial abaixo, confirme a participação e instale o GOAT Cam pelo Google Play.</p></div>
       </div>
+      <div class="beta-official" aria-labelledby="beta-play-title">
+        <h3 id="beta-play-title">Já faz parte do grupo de testadores?</h3>
+        <p>Se sua conta Google já é membro do grupo <strong>goat-cam-testadores@googlegroups.com</strong>, você pode aceitar o teste fechado e instalar a versão disponível pelo link oficial.</p>
+        <a href="https://play.google.com/apps/testing/com.goatpro.ip" target="_blank" rel="noopener noreferrer">Aceitar teste na Google Play</a>
+        <small>Este link não adiciona ninguém ao Google Groups. Se aparecer uma mensagem de app indisponível ou conta não autorizada, confira se você entrou no grupo e se está usando a mesma conta Google.</small>
+      </div>
+      <details><summary>Preencher o formulário já me transforma em testador?</summary><p>Não. O cadastro apenas registra seu interesse. Para contar como testador, é necessário entrar no grupo autorizado e aceitar o convite oficial do Google Play usando a mesma conta Google.</p></details>
       <details><summary>O aplicativo já está disponível para todos na Google Play?</summary><p>Não. O GOAT Cam ainda está em teste fechado. Somente contas autorizadas que aceitem o convite podem instalar a versão de testes pelo Google Play.</p></details>
       <details><summary>Preciso comprar o GOAT PRO Studio para ser testador?</summary><p>Não. Compradores podem participar como benefício adicional, mas também aceitamos voluntários gratuitamente.</p></details>
       <details><summary>Como envio sugestões ou aviso que encontrei um erro?</summary><p>Responda ao e-mail de confirmação do teste ou escreva para <a class="beta-link" href="mailto:suporte@goatprostudio.com.br?subject=Feedback%20GOAT%20Cam%20Beta">suporte@goatprostudio.com.br</a> com o modelo do smartphone, versão do Android, o que aconteceu e, se possível, a resolução utilizada.</p></details>

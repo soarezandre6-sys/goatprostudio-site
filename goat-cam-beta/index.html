@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070a10">
+  <title>GOAT Cam Beta | Seja um testador</title>
+  <meta name="description" content="Participe gratuitamente do teste fechado do GOAT Cam para Android. Convites para compradores do GOAT PRO Studio e voluntários.">
+  <link rel="icon" href="/assets/goatpro-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css?v=20261025-visuais-2">
+  <style>
+    .beta-shell{max-width:1100px;margin:0 auto;padding:72px 24px 88px}
+    .beta-intro{max-width:900px;text-align:center;margin:0 auto 38px}
+    .beta-kicker{color:#e6b85e;font-size:13px;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
+    .beta-intro h1{font-size:clamp(38px,6.4vw,72px);line-height:1.1;margin:14px 0 16px;letter-spacing:-.04em}
+    .beta-intro h1 em{color:#f2c66b;font-style:normal}
+    .beta-lead{color:#b5c4d6;font-size:clamp(16px,2.2vw,20px);line-height:1.65;margin:0 auto;max-width:770px}
+    .beta-pill{display:inline-block;border:1px solid rgba(230,184,94,.3);color:#f2d58d;padding:8px 14px;border-radius:50px;background:rgba(230,184,94,.07);font-size:13px;font-weight:750;margin-bottom:14px}
+    .beta-grid{display:grid;grid-template-columns:1.07fr .93fr;gap:22px;align-items:start}
+    .beta-card{border:1px solid rgba(230,184,94,.22);border-radius:22px;background:linear-gradient(155deg,#141d29,#090e17);box-shadow:0 22px 65px rgba(0,0,0,.26);padding:clamp(24px,4vw,36px)}
+    .beta-card h2{font-size:clamp(23px,3vw,31px);line-height:1.25;letter-spacing:-.02em;margin:0 0 12px}
+    .beta-card p{color:#b4c4d7;line-height:1.65}
+    .beta-list{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:15px}
+    .beta-list li{display:flex;align-items:start;gap:12px;color:#dbe7f5}
+    .beta-number{flex:0 0 29px;height:29px;border-radius:9px;display:grid;place-items:center;background:rgba(230,184,94,.13);color:#eecb81;font-weight:850;font-size:13px}
+    .beta-card label,.beta-legend{font-size:14px;font-weight:750;color:#e6edf8}
+    .beta-field{display:grid;gap:7px;margin:15px 0}
+    .beta-input{width:100%;font:inherit;background:#090f18;border:1px solid #344156;color:#fff;border-radius:12px;padding:14px 15px;outline-offset:3px}
+    .beta-input:focus{border-color:#edc974;outline:2px solid rgba(237,201,116,.2)}
+    .beta-radio{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 17px}
+    .beta-radio label{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.15);padding:10px 12px;border-radius:12px;font-size:13px;cursor:pointer}
+    .beta-radio input,.beta-consent input{accent-color:#e6b85e}
+    .beta-consent{display:flex;gap:10px;align-items:flex-start;margin:20px 0 12px;font-size:13px;font-weight:400!important;line-height:1.55;color:#cad5e2!important}
+    .beta-consent input{margin-top:4px}
+    .beta-button{background:#e6b85e;color:#10131a;border:0;border-radius:12px;min-height:52px;width:100%;font:inherit;font-weight:850;cursor:pointer;padding:12px}
+    .beta-button:disabled{opacity:.65;cursor:wait}
+    .beta-status{font-size:14px;line-height:1.55;margin-top:14px;color:#bbcadc;min-height:22px}
+    .beta-status[data-status="ok"]{padding:13px;border-radius:11px;color:#b6ebc9;background:rgba(50,154,98,.13);border:1px solid rgba(50,154,98,.25)}
+    .beta-status[data-status="error"]{padding:13px;border-radius:11px;color:#ffd3c7;background:rgba(194,99,75,.12);border:1px solid rgba(194,99,75,.28)}
+    .beta-small{font-size:12px!important;color:#98a8bc!important}
+    .beta-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 28px}
+    .beta-step{background:#0c1420;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:19px}
+    .beta-step strong{display:block;color:#f4d58f;margin-bottom:7px}
+    .beta-step p{margin:0;font-size:14px;color:#b2c0d2}
+    .beta-faq{margin-top:34px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px}
+    .beta-faq details{margin:8px 0;background:#0d1420;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:15px 18px}
+    .beta-faq summary{font-weight:750;cursor:pointer}
+    .beta-faq p{font-size:14px}
+    .beta-link{color:#f2ce84;text-decoration:underline;text-underline-offset:3px}
+    .beta-honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+    @media(max-width:790px){.beta-grid{grid-template-columns:1fr}.beta-steps{grid-template-columns:1fr}.beta-shell{padding:48px 18px 64px}.beta-card{padding:24px}.topbar nav{gap:12px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="GOAT PRO Studio"><img src="/assets/goatpro-icon.svg" alt=""><span><strong>GOAT PRO</strong> Studio</span></a>
+    <nav aria-label="Navegação"><a href="/">Início</a><a href="/#goat-cam">GOAT Cam</a><a class="nav-cta" href="/#comprar">Comprar</a></nav>
+  </header>
+  <main class="beta-shell">
+    <section class="beta-intro">
+      <span class="beta-pill">Teste fechado no Google Play • Inscrições abertas</span>
+      <p class="beta-kicker">GOAT CAM PARA ANDROID</p>
+      <h1>Seu celular pode fazer parte da sua <em>estação de observação</em>.</h1>
+      <p class="beta-lead">Participe gratuitamente do teste do GOAT Cam, aplicativo Android em desenvolvimento para transmitir a câmera do smartphone pela rede local e integrá-la ao GOAT PRO Studio em equipamentos compatíveis.</p>
+    </section>
+
+    <section class="beta-grid" aria-label="Inscrição e informações">
+      <div class="beta-card">
+        <h2>Por que ser testador?</h2>
+        <p>Você participa da evolução do aplicativo antes do lançamento público. Compradores do GOAT PRO Studio e voluntários podem se inscrever, sem obrigação de compra.</p>
+        <ul class="beta-list">
+          <li><span class="beta-number">1</span><span>Teste a transmissão do smartphone para o computador, na mesma rede Wi-Fi.</span></li>
+          <li><span class="beta-number">2</span><span>Ajude a validar descoberta automática, facilidade de conexão, estabilidade, qualidade e FPS.</span></li>
+          <li><span class="beta-number">3</span><span>Informe o que funcionou, o que falhou e suas sugestões para melhorar o GOAT Cam.</span></li>
+          <li><span class="beta-number">4</span><span>Receba instruções para acessar o teste fechado na Google Play quando sua conta estiver autorizada.</span></li>
+        </ul>
+        <p class="beta-small">Versão beta: recursos podem falhar ou mudar. A integração e o desempenho variam conforme celular, câmera, rede e computador. O acesso ao teste não inclui uma licença permanente da futura versão Pro.</p>
+      </div>
+
+      <div class="beta-card">
+        <h2>Solicite seu convite gratuito</h2>
+        <p>Informe o e-mail da <strong>conta Google usada no seu Android</strong>. Entraremos em contato com as instruções oficiais do teste fechado.</p>
+        <form id="betaSignup" novalidate>
+          <div class="beta-field">
+            <label for="betaEmail">E-mail da conta Google</label>
+            <input class="beta-input" type="email" id="betaEmail" name="email" maxlength="254" autocomplete="email" required placeholder="seuemail@gmail.com">
+          </div>
+          <div class="beta-field">
+            <span class="beta-legend">Você já comprou o GOAT PRO Studio?</span>
+            <div class="beta-radio">
+              <label><input type="radio" name="applicant_type" value="buyer"> Sim, sou comprador</label>
+              <label><input type="radio" name="applicant_type" value="volunteer" checked> Ainda não, sou voluntário</label>
+            </div>
+          </div>
+          <div class="beta-honeypot" aria-hidden="true">
+            <label for="companySite">Site da empresa</label>
+            <input id="companySite" name="company_site" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <label class="beta-consent" for="betaConsent">
+            <input type="checkbox" id="betaConsent" required>
+            <span>Concordo em receber e-mails sobre minha inscrição, o convite e orientações do GOAT Cam Beta. Posso solicitar a exclusão do cadastro pelo suporte.</span>
+          </label>
+          <button class="beta-button" id="betaSubmit" type="submit">Quero participar do teste</button>
+          <div id="betaStatus" class="beta-status" role="status" aria-live="polite"></div>
+        </form>
+        <p class="beta-small">O formulário registra seu interesse, mas ainda não adiciona sua conta à lista oficial da Play Console. Isso acontece quando o GOAT PRO Studio confirma o convite e você aceita participar pelo link oficial do Google.</p>
+      </div>
+    </section>
+
+    <section class="beta-faq" aria-label="Como funciona o teste">
+      <h2>Como será o acesso ao aplicativo?</h2>
+      <div class="beta-steps">
+        <div class="beta-step"><strong>1. Inscrição</strong><p>Envie seu e-mail Google pelo formulário. A inscrição é gratuita e voluntária.</p></div>
+        <div class="beta-step"><strong>2. Convite oficial</strong><p>Incluiremos sua conta na lista autorizada do teste fechado e enviaremos o link oficial de participação.</p></div>
+        <div class="beta-step"><strong>3. Instalação e feedback</strong><p>Abra o link com a mesma conta Google, aceite o teste e instale pela Play Store. Depois, conte como foi.</p></div>
+      </div>
+      <details><summary>O aplicativo já está disponível para todos na Google Play?</summary><p>Não. O GOAT Cam ainda está em teste fechado. Somente contas autorizadas que aceitem o convite podem instalar a versão de testes pelo Google Play.</p></details>
+      <details><summary>Preciso comprar o GOAT PRO Studio para ser testador?</summary><p>Não. Compradores podem participar como benefício adicional, mas também aceitamos voluntários gratuitamente.</p></details>
+      <details><summary>Como envio sugestões ou aviso que encontrei um erro?</summary><p>Responda ao e-mail de confirmação do teste ou escreva para <a class="beta-link" href="mailto:suporte@goatprostudio.com.br?subject=Feedback%20GOAT%20Cam%20Beta">suporte@goatprostudio.com.br</a> com o modelo do smartphone, versão do Android, o que aconteceu e, se possível, a resolução utilizada.</p></details>
+      <details><summary>Participar do beta dá direito à versão Pro gratuita?</summary><p>Não. O teste é gratuito durante a fase de avaliação, mas a futura versão GOAT Cam Pro poderá ser oferecida separadamente, com condições de compra informadas no lançamento.</p></details>
+      <p class="beta-small">Privacidade: usamos o e-mail informado exclusivamente para gerenciar este teste, enviar convites e instruções e tratar feedback. Não vendemos sua inscrição e não exigimos compra. Para solicitar exclusão, contate o suporte.</p>
+    </section>
+  </main>
+  <footer>
+    <a class="brand footer-brand" href="/"><img src="/assets/goatpro-icon.svg" alt=""><span><strong>GOAT PRO</strong> Studio</span></a>
+    <p>Observe • Empilhe • Detecte • Transmita</p>
+    <p>GOAT Cam Beta — testes voluntários</p>
+  </footer>
+  <script>
+    (function(){
+      const form=document.getElementById('betaSignup');
+      const status=document.getElementById('betaStatus');
+      const button=document.getElementById('betaSubmit');
+      const endpoint='https://azlsdxckgvlkigttkkbr.supabase.co/functions/v1/goat-cam-beta-signup';
+      form.addEventListener('submit',async function(event){
+        event.preventDefault();
+        if(!form.reportValidity()) return;
+        const email=document.getElementById('betaEmail').value.trim().toLowerCase();
+        if(!email){status.textContent='Informe o e-mail da conta Google.';status.dataset.status='error';return;}
+        button.disabled=true;
+        status.dataset.status='';
+        status.textContent='Registrando seu interesse...';
+        try{
+          const radio=form.querySelector('input[name="applicant_type"]:checked');
+          const payload={
+            email:email, applicant_type:radio?radio.value:'volunteer',
+            consent:document.getElementById('betaConsent').checked,
+            company_site:document.getElementById('companySite').value
+          };
+          const res=await fetch(endpoint,{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(payload),mode:'cors',cache:'no-store'
+          });
+          const data=await res.json();
+          if(!res.ok||!data.ok) throw new Error(data.message||'Não foi possível enviar sua inscrição.');
+          status.textContent=data.message||'Inscrição registrada!';
+          status.dataset.status='ok';
+          form.reset();
+        }catch(err){
+          status.textContent=err instanceof Error?err.message:'Falha de conexão. Tente novamente.';
+          status.dataset.status='error';
+        }finally{button.disabled=false;}
+      });
+    })();
+  </script>
+</body>
+</html>

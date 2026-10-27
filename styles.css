@@ -576,3 +576,18 @@ footer p { margin:7px 0; }
 .showcase-logo-skin-tr { left:51.62%; top:25.7%; }
 .showcase-logo-skin-bl { left:3.35%; top:61.35%; }
 .showcase-logo-skin-br { left:51.62%; top:61.35%; }
+
+/* Home GOAT PRO: a arte de quatro câmeras é 1672 x 941 (16:9).
+   Evita reaproveitar a apresentação antiga ou deformar a arte no desktop/mobile. */
+.hero-media,
+.hero-media .media-frame { min-width:0; }
+.hero-media .media-frame { width:100%; height:auto; overflow:hidden; }
+.hero-media .media-frame .hero-cameras-img {
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto !important;
+  aspect-ratio:1672 / 941;
+  object-fit:contain;
+  object-position:center;
+}

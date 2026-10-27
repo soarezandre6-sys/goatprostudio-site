@@ -536,3 +536,43 @@ footer p { margin:7px 0; }
   .mini-visual-card .mini-copy { padding: 21px; }
   .visual-end .btn { width: 100%; }
 }
+
+
+/* Rebranding do mosaico antigo de skins: cobre os cinco bodes incorporados
+   no WebP e mostra o G dourado oficial. Coordenadas proporcionais à imagem
+   original 1672x941, inclusive em telas menores. */
+.showcase-rebranded { position:relative; }
+.showcase-rebranded > img { display:block; }
+.showcase-logo-overlays {
+  position:absolute;
+  top:8px;
+  left:8px;
+  right:8px;
+  aspect-ratio:1672 / 941;
+  border-radius:12px;
+  pointer-events:none;
+  overflow:hidden;
+}
+.showcase-logo-overlay {
+  position:absolute;
+  display:block;
+  background:#03050a url("assets/goatpro-icon-oficial-sem-borda.png") center center / contain no-repeat;
+}
+.showcase-logo-main {
+  left:38.1%;
+  top:0.8%;
+  width:7.35%;
+  height:11.7%;
+  background-color:#02050a;
+}
+.showcase-logo-skin {
+  width:2.30%;
+  height:4.25%;
+  background-color:#04070d;
+  border-radius:2px;
+  box-sizing:border-box;
+}
+.showcase-logo-skin-tl { left:3.35%; top:25.7%; }
+.showcase-logo-skin-tr { left:51.62%; top:25.7%; }
+.showcase-logo-skin-bl { left:3.35%; top:61.35%; }
+.showcase-logo-skin-br { left:51.62%; top:61.35%; }
